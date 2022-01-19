@@ -1,0 +1,19 @@
+.contact-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  // margin-block-end: 30px;
+  input {
+    border-radius: 5px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    input {
+      margin-top: 5px;
+    }
+  }
+}

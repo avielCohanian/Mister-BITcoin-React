@@ -1,0 +1,75 @@
+.contact-preview {
+  position: relative;
+  .contact-preview-container {
+    display: flex;
+    background-color: #f5f5dc8a;
+    box-shadow: 0 0 11px #0000002b;
+    height: 80px;
+    width: 600px;
+    padding: 20px 0;
+    border-radius: 3em;
+    cursor: pointer;
+    &:hover {
+      background-color: #d7d7c34f;
+    }
+    .contact-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+    }
+    img {
+      display: flex;
+      margin-left: 30px;
+      border-radius: 3rem;
+      width: 50px;
+      height: 50px;
+      margin-top: -5px;
+    }
+  }
+
+  .delete-btn {
+    opacity: 0;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    color: #00000080;
+
+    cursor: pointer;
+    &:hover {
+      color: black;
+    }
+  }
+  .edit-btn {
+    opacity: 0;
+    position: absolute;
+    top: 5px;
+    right: 45px;
+    color: #00000080;
+    cursor: pointer;
+    &:hover {
+      color: black;
+    }
+  }
+  &:hover {
+    .delete-btn,
+    .edit-btn {
+      opacity: 1;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .contact-preview {
+    .contact-preview-container {
+      width: 300px;
+    }
+
+    .contact-name {
+      margin-right: 65px;
+    }
+    .delete-btn,
+    .edit-btn {
+      opacity: 1;
+    }
+  }
+}

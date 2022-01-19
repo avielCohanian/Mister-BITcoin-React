@@ -1,0 +1,15 @@
+.statistic-page {
+  text-align: center;
+  h1 {
+    margin-bottom: 70px;
+  }
+
+  .Charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    strong {
+      margin-bottom: 50px;
+    }
+  }
+}

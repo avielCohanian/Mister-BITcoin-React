@@ -1,0 +1,28 @@
+.edit-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  h1 {
+    text-align: center;
+  }
+  form {
+    margin-top: 20px;
+    .save-btn {
+      margin: auto;
+      width: 100px;
+      text-align: center;
+      // border
+    }
+    input {
+      border-radius: 4px;
+      margin-bottom: 25px;
+    }
+    // display: flex;
+  }
+  .back-btn {
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 10px;
+    display: flex;
+  }
+}

@@ -1,0 +1,25 @@
+.app {
+  height: 100vh;
+  header {
+    height: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    background-color: #b0b0b0;
+    padding: 0 20px;
+    a {
+      cursor: pointer;
+    }
+
+    .links {
+      & > * {
+        padding-right: 20px;
+      }
+    }
+  }
+  .app-container {
+    min-height: 95%;
+    background-color: #0000001a;
+  }
+}

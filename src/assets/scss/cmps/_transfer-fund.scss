@@ -1,0 +1,27 @@
+.transfer-fund {
+  padding: 20px 35px;
+  background-color: #b6b4ae;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  h3 {
+    margin-bottom: 15px;
+  }
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    input {
+      background-color: #ffffff00;
+      border: none;
+      border-bottom: 1px solid black;
+      &:focus-visible {
+        outline: none;
+      }
+    }
+    button {
+      border-radius: 4px;
+    }
+  }
+}

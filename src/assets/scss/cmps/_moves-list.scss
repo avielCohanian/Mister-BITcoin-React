@@ -1,0 +1,17 @@
+.moves-list {
+  background-color: #dddcd7;
+  margin: 20px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  h2 {
+    text-align: center;
+  }
+  & > * {
+    border-bottom: 1px solid black;
+    // text-decoration: underline;
+  }
+  .card {
+    padding: 20px;
+  }
+}

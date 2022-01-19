@@ -1,0 +1,36 @@
+// Externals
+
+// Setup
+@import 'setup/variables';
+@import 'setup/functions';
+@import 'setup/mixins';
+
+// Basics
+@import 'basics/typography';
+@import 'basics/base';
+@import 'basics/helpers';
+@import 'basics/layout';
+@import 'basics/modals';
+@import 'basics/animations';
+@import 'basics/loading';
+@import 'basics/delete-modal';
+
+// Pages
+@import 'pages/app';
+@import 'pages/home-page';
+@import 'pages/contact-details-page';
+@import 'pages/contact-filter';
+@import 'pages/statistic-page';
+@import 'pages/contact-page';
+@import 'pages/edit-page';
+@import 'pages/signup-page';
+
+// Components
+@import 'cmps/contact-list';
+@import 'cmps/contact-preview';
+@import 'cmps/transfer-fund';
+@import 'cmps/moves-list';
+
+.active {
+  color: #19a000d9;
+}

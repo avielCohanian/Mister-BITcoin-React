@@ -11,15 +11,16 @@ const USER_KEY = 'yami';
 
 async function getUser() {
   const users = await firebaseService.getLoggingUser();
-  console.log(users);
   const user = storageService.load(USER_KEY);
   return user.length ? JSON.parse(user) : null;
 }
-function signup(name) {
+function signup({ name, password, imgData }) {
   if (!storageService.load(name).length) {
     const user = {
       _id: _makeId(),
-      name: name,
+      name,
+      password,
+      img: imgData,
       coins: 100,
       moves: [],
     };

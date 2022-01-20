@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoggingUser } from '../store/actions/userActions';
+import { Register } from './Register';
 
 export const SignupPage = (props) => {
   const dispatch = useDispatch();
@@ -12,29 +13,14 @@ export const SignupPage = (props) => {
     setUserName(value);
   };
 
-  const signup = (ev) => {
-    ev.preventDefault();
-    dispatch(setLoggingUser(userName));
+  const signup = (user) => {
+    dispatch(setLoggingUser(user));
     props.history.push('/');
   };
 
   return (
     <div className="signup-page">
-      <form onSubmit={signup}>
-        <label htmlFor="userName">Please enter your name:</label>
-        <input
-          placeholder="User name"
-          onChange={handleChange}
-          value={userName}
-          type="text"
-          name="userName"
-          id="userName"
-        />
-
-        <button className="simple-button" onClick={signup}>
-          Sign up
-        </button>
-      </form>
+      <Register signup={signup}></Register>
     </div>
   );
 };

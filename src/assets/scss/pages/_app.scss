@@ -1,5 +1,6 @@
 .app {
   height: 100vh;
+  background-image: url(../../imgs/bcImg.jpg);
   header {
     height: 5%;
     display: flex;
@@ -20,6 +21,6 @@
   }
   .app-container {
     min-height: 95%;
-    background-color: #0000001a;
+    // background-color: #0000001a;
   }
 }

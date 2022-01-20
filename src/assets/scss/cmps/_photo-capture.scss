@@ -1,0 +1,59 @@
+.photo-capture {
+  position: relative;
+  .image-picker {
+    cursor: pointer;
+    .upload-img {
+      position: absolute;
+      top: 70px;
+      left: 10px;
+      font-size: 40px;
+    }
+  }
+  .upload-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 5px;
+    .ok-btn {
+      position: absolute;
+      top: 37px;
+      left: 181px;
+      margin: 0;
+      padding: 0 0;
+      width: 60px;
+      .next-btn {
+        font-size: 40px;
+      }
+    }
+  }
+
+  .video-container {
+    text-align: center;
+
+    .camera,
+    .preview {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 10px;
+    }
+
+    .camera {
+      transform: scaleX(-1);
+      filter: FlipH;
+    }
+
+    .photo-capture-actions {
+      margin: 27px 0 0 0;
+
+      button {
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+  .none {
+    display: none;
+  }
+}

@@ -6,10 +6,10 @@ export function getLoggingUser() {
   };
 }
 
-export function setLoggingUser(name) {
+export function setLoggingUser(userData) {
   return async (dispatch) => {
     try {
-      const user = await userService.signup(name);
+      const user = await userService.signup(userData);
       dispatch({ type: 'SET_LOGGING_USER', user });
     } catch (err) {
       console.log(err);

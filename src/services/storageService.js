@@ -7,7 +7,12 @@ function load(key, defaultValue = null) {
   // return JSON.parse(value);
   return value;
 }
+
+function remove(key) {
+  localStorage.removeItem(key);
+}
 export const storageService = {
   store,
   load,
+  remove,
 };

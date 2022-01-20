@@ -16,6 +16,16 @@ export function setLoggingUser(userData) {
     }
   };
 }
+export function logOut() {
+  return async (dispatch) => {
+    try {
+      const user = await userService.logOut();
+      dispatch({ type: 'LOGOUT' });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
 
 export function addMove(move, amount) {
   return async (dispatch) => {

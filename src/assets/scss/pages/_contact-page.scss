@@ -1,23 +1,64 @@
 .contact-page {
+  position: relative;
+  padding-bottom: 15px;
   .add-contact {
     margin-bottom: 15px;
-    // margin-top: -20px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     input {
       background-color: #00000026;
-      padding: 5px;
+      padding: 10px;
       width: 250px;
-      margin-left: 45px;
+      border: none;
+      box-shadow: 0 0 20px 3px #000000a6;
+      &:focus-visible {
+        outline: none;
+      }
     }
     .add-btn {
-      margin-top: 6px;
+      position: fixed;
+      background: greenyellow;
+      border-radius: 50%;
+      bottom: 20px;
+      right: 20px;
+      font-size: 50px;
+      color: black;
+      border: 0;
+      opacity: 0.6;
+      transition: 0.3s all;
+      padding: 0;
+      cursor: pointer;
+      width: 65px;
+      height: 65px;
+
+      .MuiSvgIcon-root {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        width: 70px;
+        height: 70px;
+        font-size: 2px;
+      }
+
+      &:disabled {
+        cursor: initial;
+        opacity: 0.2;
+      }
+
+      &:hover:not(:disabled) {
+        opacity: 1;
+        color: whitesmoke;
+        background: #4caf50;
+      }
     }
   }
   h2 {
     text-align: center;
+    padding-top: 30px;
+    font-size: 30px;
   }
 }
 

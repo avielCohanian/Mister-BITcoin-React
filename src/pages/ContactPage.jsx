@@ -53,9 +53,7 @@ export const ContactPage = (props) => {
       <div className="add-contact">
         <ContactFilter onChangeFilter={onChangeFilter} />
         <Link className="simple-button add-btn" to="/contact/edit">
-          <span title="Add contact">
-            <AddSharpIcon />
-          </span>
+          <AddSharpIcon />
         </Link>
       </div>
       <ContactList removeContact={removeContactModel} contacts={contacts} />

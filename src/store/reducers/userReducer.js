@@ -10,6 +10,12 @@ export function userReducer(state = INITIAL_STATE, action) {
         ...state,
         loggedInUser: action.user,
       };
+    case 'LOGOUT':
+      // const { loggedInUser } = state;
+      return {
+        ...state,
+        loggedInUser: null,
+      };
 
     default:
       return state;

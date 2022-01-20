@@ -6,13 +6,15 @@ import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
 import CameraEnhanceSharpIcon from '@mui/icons-material/CameraEnhanceSharp';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 
-export const Register = ({ signup }) => {
+export const Register = ({ signup, loginUser }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
   const [user, setUser] = useState({
     name: '',
     password: '',
+    email: '',
     imgData: '',
   });
 
@@ -48,9 +50,7 @@ export const Register = ({ signup }) => {
     ev.preventDefault();
     if (user.name && user.password) {
       setIsProcessing(true);
-      // const userImg = user.imgData ? user.imgData : anonymous;
       const userImg = imgData();
-      // console.log(userImg);
       setUser({ ...user, imgData: userImg });
       setTimeout(() => {
         signup(user);
@@ -113,12 +113,37 @@ export const Register = ({ signup }) => {
           />
         </div>
 
+        <div className="field">
+          <label className="field-icon">
+            <AlternateEmailSharpIcon className="material-icons"></AlternateEmailSharpIcon>
+          </label>
+          <input
+            type="email"
+            className="field-input"
+            onChange={handleChange}
+            value={user.email}
+            name="email"
+            id="email"
+            placeholder="Email"
+            autoComplete="on"
+            required
+          />
+        </div>
+
         <div className="footer">
           <button disabled={!isValid && isProcessing} type="submit" className="btn-identify simple-button">
             Verify Identity
           </button>
         </div>
       </form>
+
+      <h4>
+        Already registered?
+        <br />
+        <a className="login-user-btn" onClick={loginUser}>
+          Click <span> here</span> to Login
+        </a>
+      </h4>
     </div>
   );
 };

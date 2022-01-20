@@ -105,6 +105,12 @@
   .footer {
     text-align: center;
   }
+  .login-user-btn {
+    cursor: pointer;
+    span {
+      text-decoration: underline;
+    }
+  }
 }
 
 .none {

@@ -10,7 +10,33 @@
       border-radius: 4px;
     }
     :last-child {
-      margin-top: 30px;
+      // margin-top: 30px;
+    }
+  }
+
+  .form-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 2px;
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    input {
+      padding: 5px 8px;
+      width: 100%;
+    }
+    .login-user-btn {
+      cursor: pointer;
+      span {
+        text-decoration: underline;
+      }
     }
   }
 }

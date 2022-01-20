@@ -7,6 +7,7 @@
   max-width: 320px;
   margin: 0 auto;
   padding: 20px;
+  background-image: url('../../imgs/bcImg.jpg');
   // background-color: #e6e6e6;
   border-radius: 6px;
 
@@ -23,7 +24,9 @@
     left: 0;
     right: 0;
 
-    background-color: #e6e6e6;
+    // background-color: #e6e6e6;
+    background-image: url('../../imgs/bcImg.jpg');
+
     transform: translateY(500px);
     transition: transform 0.3s;
 

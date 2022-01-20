@@ -1,46 +1,50 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { connect } from 'react-redux';
 import { addMove, getLoggingUser, setLoggingUser } from '../store/actions/userActions';
 
-class _TransferFund extends Component {
-  state = {
-    amount: '',
-  };
-  handleChange = ({ target }) => {
+export const TransferFund = (props) => {
+  // state = {
+  //   amount: '',
+  // };
+  const [amount, setAmount] = useState('');
+  const dispatch = useDispatch();
+
+  const handleChange = ({ target }) => {
     const value = target.type === 'number' ? +target.value : target.value;
-    this.setState({ amount: value });
+    setAmount(value);
   };
-  transfer = () => {
-    this.props.addMove(this.props.currUserName, this.state.amount);
-    this.setState({ amount: '' });
+  const transfer = () => {
+    console.log(props.currUserName);
+    dispatch(addMove(props.currUserName, amount));
+    setAmount('');
   };
-  render() {
-    const { amount } = this.state;
-    return (
-      <div className="transfer-fund">
-        <h3>Transfer coins to {this.props.currUserName}</h3>
-        <div className="input-container">
-          <label htmlFor="amount">Amount:</label>
-          <input type="number" name="amount" value={amount} id="amount" onChange={this.handleChange} />
-          <button className="simple-button" onClick={this.transfer}>
-            Transfer
-          </button>
-        </div>
+
+  return (
+    <div className="transfer-fund">
+      <h3>Transfer coins to {props.currUserName}</h3>
+      <div className="input-container">
+        <label htmlFor="amount">Amount:</label>
+        <input type="number" name="amount" value={amount} id="amount" onChange={handleChange} />
+        <button className="simple-button" onClick={transfer}>
+          Transfer
+        </button>
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    loggedInUser: state.userModule.loggedInUser,
-  };
+    </div>
+  );
 };
 
-const mapDispatchToProps = {
-  getLoggingUser,
-  setLoggingUser,
-  addMove,
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     loggedInUser: state.userModule.loggedInUser,
+//   };
+// };
 
-export const TransferFund = connect(mapStateToProps, mapDispatchToProps)(_TransferFund);
+// const mapDispatchToProps = {
+//   getLoggingUser,
+//   setLoggingUser,
+//   addMove,
+// };
+
+// export const TransferFund = connect(mapStateToProps, mapDispatchToProps)(_TransferFund);

@@ -73,12 +73,50 @@ async function update(contact) {
   });
 }
 
-async function getLoggingUser() {
+async function getUsers() {
   let querySnapshot = await getDocs(dataRefUser);
   return querySnapshot.docs.map((doc) => {
     let user = doc.data();
     user._id = doc.id;
     return user;
+  });
+}
+
+async function addUser(user) {
+  if (user._id) {
+    updateUser(user);
+  } else {
+    const _id = _makeId();
+    await addDoc(dataRef, {
+      ...user,
+      _id,
+    });
+  }
+}
+
+async function updateUser(user) {
+  const frankDocRef = doc(db, 'users', user._id);
+  await setDoc(frankDocRef, {
+    password: user.password,
+    coins: user.coins,
+    name: user.name,
+    img: user.img,
+    moves: user.moves,
+  });
+}
+
+async function removeUser(userId) {
+  await deleteDoc(doc(db, 'users', userId));
+}
+
+async function getByIdUser(userId) {
+  let users = await getUsers();
+  return users.find((t) => t._id === userId);
+}
+async function login(name, password) {
+  let users = await getUsers();
+  return users.find((u) => {
+    return u.name === name && u.password === password;
   });
 }
 
@@ -97,5 +135,9 @@ export default {
   remove,
   update,
   getById,
-  getLoggingUser,
+  getUsers,
+  addUser,
+  removeUser,
+  getByIdUser,
+  login,
 };

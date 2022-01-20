@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ChartStatistic } from '../cmp/Chart';
 import Loading from '../cmp/Loading';
 import { bitcoinService } from '../services/bitcoinService';
+import { getLoggingUser } from '../store/actions/userActions';
 
-export const StatisticPage = () => {
-  // state = {
-  //   tradeVolume: null,
-  //   marketPrice: null,
-  // };
-
+export const StatisticPage = (props) => {
+  const { loggedInUser } = useSelector((state) => state.userModule);
   const [tradeVolume, setTradeVolume] = useState(null);
   const [marketPrice, setMarketPrice] = useState(null);
+  const [loggingUser, setLoggingUser] = useState(null);
+  const dispatch = useDispatch();
 
-  // componentDidMount() {
-  //   this.loadChart();
-  // }
+  useEffect(() => {
+    (async () => {
+      const loggingUser = await dispatch(getLoggingUser());
+      if (!loggingUser) props.history.push('/signup');
+      setLoggingUser(loggingUser);
+    })();
+  }, [loggedInUser]);
 
   useEffect(() => {
     (async () => {
@@ -25,13 +29,7 @@ export const StatisticPage = () => {
     })();
   }, []);
 
-  // async loadChart() {
-  //   const tradeVolume = await bitcoinService.getConfirmedTransactions();
-  //   const marketPrice = await bitcoinService.getMarketPrice();
-  //   this.setState({ tradeVolume, marketPrice });
-  // }
-
-  if (!tradeVolume && !marketPrice) return <Loading />;
+  if (!loggingUser && !tradeVolume && !marketPrice) return <Loading />;
   return (
     <section className="statistic-page container">
       <h1>Chart</h1>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { ContactPreview } from './ContactPreview';
+import Loading from './Loading';
 
 export function ContactList({ contacts, selectUser, removeContact }) {
+  if (!contacts) return <Loading></Loading>;
   return (
     <div className="contact-list ">
       <ul className="clean-list ">

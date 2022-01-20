@@ -8,7 +8,7 @@ import React from 'react';
 import { AppHeader } from './cmp/AppHeader';
 import { ContactDetailsPage } from './pages/ContactDetailsPage';
 import { ContactEdit } from './pages/ContactEdit';
-import { SignupPage } from './pages/SignupPage';
+import { LoginSignupPage } from './pages/LoginSignupPage';
 
 export function App() {
   return (
@@ -20,7 +20,7 @@ export function App() {
             <Route component={ContactEdit} path="/contact/edit/:contactId?" />
             <Route component={ContactDetailsPage} path="/contact/:contactId" />
             <Route component={ContactPage} path="/contact" />
-            <Route component={SignupPage} path="/signup" />
+            <Route component={LoginSignupPage} path="/signup" />
             <Route component={StatisticPage} path="/statistic" />
             <Route component={HomePage} path="/" />
           </Switch>

@@ -210,7 +210,6 @@ function remove(contactId) {
 }
 
 function getContactById(contactId) {
-  console.log(contactId);
   return firebaseService.getById(contactId);
 }
 

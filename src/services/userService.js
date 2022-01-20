@@ -10,14 +10,14 @@ export const userService = {
 const USER_KEY = 'yami';
 
 async function getUser() {
-  const users = await firebaseService.getLoggingUser();
+  // const users = await firebaseService.getUsers();
   const user = storageService.load(USER_KEY);
   return user.length ? JSON.parse(user) : null;
 }
+
 function signup({ name, password, imgData }) {
   if (!storageService.load(name).length) {
     const user = {
-      _id: _makeId(),
       name,
       password,
       img: imgData,
@@ -28,8 +28,8 @@ function signup({ name, password, imgData }) {
   }
   return JSON.parse(storageService.load(USER_KEY));
 }
-function addMove(contact, amount) {
-  const user = getUser();
+async function addMove(contact, amount) {
+  const user = await getUser();
   if (user.coins - amount < 0) return;
   user.coins = user.coins - amount;
   const move = {

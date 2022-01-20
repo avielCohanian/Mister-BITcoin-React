@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setLoggingUser } from '../store/actions/userActions';
 import { Register } from './Register';
 
-export const SignupPage = (props) => {
+export const LoginSignupPage = (props) => {
   const dispatch = useDispatch();
 
   const [userName, setUserName] = useState('');

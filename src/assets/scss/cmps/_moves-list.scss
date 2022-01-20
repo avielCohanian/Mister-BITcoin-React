@@ -1,9 +1,11 @@
 .moves-list {
-  background-color: #dddcd7;
+  background-color: #dddcd769;
   margin: 20px 0;
   padding: 20px;
   display: flex;
+  box-shadow: 0px 0px 15px 20px #88888836;
   flex-direction: column;
+  border-radius: 9px;
   h2 {
     text-align: center;
   }

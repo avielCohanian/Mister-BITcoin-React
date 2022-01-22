@@ -40,7 +40,6 @@ async function query() {
 
 async function add(contact) {
   if (contact._id) {
-    console.log(contact);
     update(contact);
   } else {
     const _id = _makeId();
@@ -60,7 +59,6 @@ async function getById(contactId) {
 }
 
 async function update(contact) {
-  console.log(contact);
   const frankDocRef = doc(db, 'contacts', contact._id);
   await setDoc(frankDocRef, {
     email: contact.email,

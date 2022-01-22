@@ -16,7 +16,6 @@ export const TransferFund = (props) => {
     setAmount(value);
   };
   const transfer = () => {
-    console.log(props.currUserName);
     dispatch(addMove(props.currUserName, amount));
     setAmount('');
   };

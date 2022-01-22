@@ -15,7 +15,7 @@ export const Register = ({ signup, login }) => {
     name: '',
     password: '',
     email: '',
-    imgData: '',
+    imgData: null,
   });
 
   useEffect(() => {
@@ -46,12 +46,12 @@ export const Register = ({ signup, login }) => {
     setIsCameraVisible(false);
   };
 
-  const register = (ev) => {
+  const register = async (ev) => {
     ev.preventDefault();
     if (user.name && user.password && user.email) {
       setIsProcessing(true);
       const userImg = imgData();
-      setUser({ ...user, imgData: userImg });
+      await setUser({ ...user, imgData: 'userImg' });
       setTimeout(() => {
         signup(user);
       }, 1200);
@@ -136,14 +136,6 @@ export const Register = ({ signup, login }) => {
           </button>
         </div>
       </form>
-
-      <h4>
-        Already registered?
-        <br />
-        <a className="login-user-btn" onClick={login}>
-          Click <span> here</span> to Login
-        </a>
-      </h4>
     </div>
   );
 };

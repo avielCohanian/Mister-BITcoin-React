@@ -23,5 +23,15 @@
       gap: 3px;
       padding: 10px;
     }
+    .img-preview {
+      position: relative;
+      margin: 1em auto;
+      width: 160px;
+      height: 160px;
+      background-size: cover;
+      background-position: center center;
+      border: 1px solid #fff;
+      border-radius: 50%;
+    }
   }
 }

@@ -28,7 +28,6 @@ export const LoginSignupPage = (props) => {
     props.history.push('/');
   };
   const login = () => {
-    console.log(isLogin);
     setIsLogin(!isLogin);
   };
 
@@ -41,6 +40,10 @@ export const LoginSignupPage = (props) => {
   };
   return (
     <div className="signup-page">
+      <h4 className="login-user-btn">
+        <a onClick={login}>{!isLogin ? <h4> Login </h4> : <h4> SignUp</h4>}</a>
+      </h4>
+
       {!isLogin ? (
         <Register signup={signup} login={login}></Register>
       ) : (
@@ -78,13 +81,6 @@ export const LoginSignupPage = (props) => {
             />
           </div>
           <button>Login</button>
-          <h4>
-            Not registered yet?
-            <br />
-            <a className="login-user-btn" onClick={login}>
-              Click <span> here </span> to SignUp
-            </a>
-          </h4>
         </form>
       )}
     </div>

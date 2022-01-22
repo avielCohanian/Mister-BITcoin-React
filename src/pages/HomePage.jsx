@@ -5,6 +5,7 @@ import { MovesList } from '../cmp/MovesList';
 import { bitcoinService } from '../services/bitcoinService';
 import { userService } from '../services/userService';
 import { getLoggingUser } from '../store/actions/userActions';
+import anonymous from '../assets/imgs/anonymous.png';
 
 export const HomePage = (props) => {
   const [user, setUser] = useState(null);
@@ -30,11 +31,16 @@ export const HomePage = (props) => {
     setBtc(btc);
   };
 
+  const imgData = () => {
+    return user.img || anonymous;
+  };
+
   if (!user) return <Loading />;
 
   return (
     <div className="home-page">
       <section>
+        <div className="img-preview" style={{ backgroundImage: 'url(' + imgData() + ')' }}></div>
         <h3>Hello {user.name}!</h3>
         <div>
           <b>Coins: </b>

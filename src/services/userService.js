@@ -12,7 +12,6 @@ export const userService = {
 const USER_KEY = 'yami';
 
 async function getUser() {
-  // const users = await firebaseService.getUsers();
   const user = storageService.load(USER_KEY);
   return user.length ? JSON.parse(user) : null;
 }

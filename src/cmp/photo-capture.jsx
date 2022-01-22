@@ -59,7 +59,6 @@ export const PhotoCapture = ({ onDone }) => {
   };
 
   const upload = (ev) => {
-    console.log(ev);
     var reader = new FileReader();
     reader.onload = (event) => (picture.current = event.target.result);
     reader.readAsDataURL(ev.target.files[0]);
@@ -67,8 +66,6 @@ export const PhotoCapture = ({ onDone }) => {
 
   const done = (ev) => {
     ev.preventDefault();
-
-    // console.log(picture.current);
     onDone(picture.current);
   };
 

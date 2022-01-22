@@ -86,11 +86,14 @@ async function addUser(user) {
   if (user._id) {
     updateUser(user);
   } else {
+    let users = await getUsers();
+    if (users.some((u) => u.name === user.name)) return null;
     const _id = _makeId();
-    await addDoc(dataRef, {
+    await addDoc(dataRefUser, {
       ...user,
       _id,
     });
+    return user;
   }
 }
 
@@ -115,9 +118,11 @@ async function getByIdUser(userId) {
 }
 async function login(name, password) {
   let users = await getUsers();
-  return users.find((u) => {
+  const currUser = users.find((u) => {
     return u.name === name && u.password === password;
   });
+  delete currUser.password;
+  return currUser;
 }
 
 function _makeId(length = 10) {

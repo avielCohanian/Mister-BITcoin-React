@@ -6,6 +6,7 @@ export const userService = {
   addMove,
   signup,
   logOut,
+  login,
 };
 
 const USER_KEY = 'yami';
@@ -16,19 +17,23 @@ async function getUser() {
   return user.length ? JSON.parse(user) : null;
 }
 
-function signup({ name, password, email, imgData }) {
-  if (!storageService.load(name).length) {
-    const user = {
-      name,
-      password,
-      email,
-      img: imgData,
-      coins: 100,
-      moves: [],
-    };
-    storageService.store(USER_KEY, user);
-  }
-  return JSON.parse(storageService.load(USER_KEY));
+async function signup({ name, password, email, imgData }) {
+  const user = {
+    name,
+    password,
+    email,
+    img: imgData,
+    coins: 100,
+    moves: [],
+  };
+  const addUser = await firebaseService.addUser(user);
+  return addUser ? await login(user) : null;
+}
+
+async function login({ name, password }) {
+  const user = await firebaseService.login(name, password);
+  if (user) storageService.store(USER_KEY, user);
+  return user;
 }
 function logOut() {
   storageService.remove(USER_KEY);

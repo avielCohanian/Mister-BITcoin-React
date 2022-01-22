@@ -8,7 +8,7 @@ import CameraEnhanceSharpIcon from '@mui/icons-material/CameraEnhanceSharp';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 
-export const Register = ({ signup, loginUser }) => {
+export const Register = ({ signup, login }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
   const [user, setUser] = useState({
@@ -48,7 +48,7 @@ export const Register = ({ signup, loginUser }) => {
 
   const register = (ev) => {
     ev.preventDefault();
-    if (user.name && user.password) {
+    if (user.name && user.password && user.email) {
       setIsProcessing(true);
       const userImg = imgData();
       setUser({ ...user, imgData: userImg });
@@ -121,7 +121,7 @@ export const Register = ({ signup, loginUser }) => {
             type="email"
             className="field-input"
             onChange={handleChange}
-            value={user.email}
+            value={user.email || ''}
             name="email"
             id="email"
             placeholder="Email"
@@ -140,7 +140,7 @@ export const Register = ({ signup, loginUser }) => {
       <h4>
         Already registered?
         <br />
-        <a className="login-user-btn" onClick={loginUser}>
+        <a className="login-user-btn" onClick={login}>
           Click <span> here</span> to Login
         </a>
       </h4>

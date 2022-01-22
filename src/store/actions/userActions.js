@@ -6,11 +6,24 @@ export function getLoggingUser() {
   };
 }
 
-export function setLoggingUser(userData) {
+export function signupUser(userData) {
   return async (dispatch) => {
     try {
       const user = await userService.signup(userData);
       dispatch({ type: 'SET_LOGGING_USER', user });
+      return user;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function loginUser(userData) {
+  return async (dispatch) => {
+    try {
+      const user = await userService.login(userData);
+      dispatch({ type: 'SET_LOGGING_USER', user });
+      return user;
     } catch (err) {
       console.log(err);
     }

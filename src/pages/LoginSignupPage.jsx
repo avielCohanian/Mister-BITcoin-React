@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setLoggingUser } from '../store/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, signupUser } from '../store/actions/userActions';
 import { Register } from './Register';
 
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
@@ -8,8 +8,9 @@ import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
 
 export const LoginSignupPage = (props) => {
   const dispatch = useDispatch();
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
-  const [login, setLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({
     name: '',
     password: '',
@@ -21,25 +22,27 @@ export const LoginSignupPage = (props) => {
     setUser({ ...user, [field]: value });
   };
 
-  const signup = (user) => {
-    dispatch(setLoggingUser(user));
+  const signup = async (user) => {
+    const addUser = await dispatch(signupUser(user));
+    if (!addUser) return;
     props.history.push('/');
   };
-  const loginUser = () => {
-    setLogin(!login);
+  const login = () => {
+    console.log(isLogin);
+    setIsLogin(!isLogin);
   };
 
-  const register = (ev) => {
+  const register = async (ev) => {
     ev.preventDefault();
     if (user.name && user.password) {
-      signup(user);
+      const isLoginUser = await dispatch(loginUser(user));
+      if (isLoginUser) props.history.push('/');
     }
   };
-
   return (
     <div className="signup-page">
-      {!login ? (
-        <Register signup={signup} loginUser={loginUser}></Register>
+      {!isLogin ? (
+        <Register signup={signup} login={login}></Register>
       ) : (
         <form onSubmit={register} className="form-login">
           <div className="field">
@@ -74,10 +77,11 @@ export const LoginSignupPage = (props) => {
               autoComplete="on"
             />
           </div>
+          <button>Login</button>
           <h4>
             Not registered yet?
             <br />
-            <a className="login-user-btn" onClick={loginUser}>
+            <a className="login-user-btn" onClick={login}>
               Click <span> here </span> to SignUp
             </a>
           </h4>

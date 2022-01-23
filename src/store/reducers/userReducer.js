@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   loggedInUser: null,
+  userMsg: '',
 };
 
 export function userReducer(state = INITIAL_STATE, action) {
@@ -11,10 +12,14 @@ export function userReducer(state = INITIAL_STATE, action) {
         loggedInUser: action.user,
       };
     case 'LOGOUT':
-      // const { loggedInUser } = state;
       return {
         ...state,
         loggedInUser: null,
+      };
+    case 'USERMSG':
+      return {
+        ...state,
+        userMsg: action.msg,
       };
 
     default:

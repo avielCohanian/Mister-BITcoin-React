@@ -2,12 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
+import anonymous from '../assets/imgs/anonymous.png';
 
 export function ContactPreview({ contact, removeContact }) {
+  const imgData = () => {
+    return contact.img || anonymous;
+  };
+
   return (
     <div className="contact-preview">
       <Link className="contact-preview-container" to={`/contact/${contact._id}`}>
-        <img src={contact.img} alt="" />
+        <img src={imgData()} alt="" />
         <p className="contact-name">{contact.name}</p>
       </Link>
       <a className="delete-btn" onClick={() => removeContact(contact._id)}>

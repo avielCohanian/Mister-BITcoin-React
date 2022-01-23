@@ -9,6 +9,7 @@ import { AppHeader } from './cmp/AppHeader';
 import { ContactDetailsPage } from './pages/ContactDetailsPage';
 import { ContactEdit } from './pages/ContactEdit';
 import { LoginSignupPage } from './pages/LoginSignupPage';
+import { UserMsg } from './cmp/UserMsg';
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
       <div className="app">
         <AppHeader />
         <div className="app-container">
+          <UserMsg />
           <Switch>
             <Route component={ContactEdit} path="/contact/edit/:contactId?" />
             <Route component={ContactDetailsPage} path="/contact/:contactId" />

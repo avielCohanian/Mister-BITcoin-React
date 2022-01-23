@@ -34,8 +34,10 @@ export const LoginSignupPage = (props) => {
   const register = async (ev) => {
     ev.preventDefault();
     if (user.name && user.password) {
-      const isLoginUser = await dispatch(loginUser(user));
-      if (isLoginUser) props.history.push('/');
+      const currUser = await dispatch(loginUser(user));
+      currUser
+        ? dispatch({ type: 'USERMSG', msg: `Welcome ${currUser.name}` }) && props.history.push('/')
+        : dispatch({ type: 'USERMSG', msg: `The username or password is incorrect` });
     }
   };
   return (

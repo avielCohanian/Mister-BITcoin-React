@@ -4,7 +4,7 @@ import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
 import { bitcoinService } from '../services/bitcoinService';
 import { userService } from '../services/userService';
-import { getLoggingUser } from '../store/actions/userActions';
+import { getLoggingUser, loginUser } from '../store/actions/userActions';
 import anonymous from '../assets/imgs/anonymous.png';
 
 export const HomePage = (props) => {
@@ -18,6 +18,7 @@ export const HomePage = (props) => {
       dispatch(getLoggingUser());
       const user = await userService.getUser();
       if (!user) props.history.push('/signup');
+      dispatch({ type: 'SET_LOGGING_USER', user });
       setUser(user);
     })();
   }, []);

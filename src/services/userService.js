@@ -7,8 +7,8 @@ export const userService = {
   signup,
   logOut,
   login,
+  checkUserPassword,
 };
-
 const USER_KEY = 'yami';
 
 async function getUser() {
@@ -25,7 +25,7 @@ async function signup({ name, password, email, imgData }) {
     coins: 100,
     moves: [],
   };
-  const addUser = await firebaseService.addUser(user);
+  const addUser = await firebaseService.saveUser(user);
   return addUser ? await login(user) : null;
 }
 
@@ -36,6 +36,12 @@ async function login({ name, password }) {
 }
 function logOut() {
   storageService.remove(USER_KEY);
+}
+
+async function checkUserPassword(password) {
+  const currUser = await getUser();
+  const isPassword = await firebaseService.checkUserPassword(currUser._id, password);
+  return isPassword;
 }
 
 async function addMove(contact, amount) {
@@ -49,15 +55,7 @@ async function addMove(contact, amount) {
     amount: amount,
   };
   user.moves.unshift(move);
+  await firebaseService.saveUser(user);
   storageService.store(USER_KEY, user);
   return user;
-}
-
-function _makeId(length = 10) {
-  var txt = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < length; i++) {
-    txt += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return txt;
 }

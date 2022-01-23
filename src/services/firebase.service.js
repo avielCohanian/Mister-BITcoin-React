@@ -1,18 +1,5 @@
-import firebase from 'firebase/app';
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-  setDoc,
-  onSnapshot,
-  addDoc,
-  updateDoc,
-} from 'firebase/firestore';
-// import { utilService } from '../service/utilService.js';
+import { getFirestore, collection, getDocs, deleteDoc, doc, setDoc, addDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
-import { contactService } from './contactService';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDI85p52_tMXOcna0mK2d2WpDy4b1au2k8',
@@ -63,8 +50,6 @@ async function update(contact) {
   await setDoc(frankDocRef, {
     email: contact.email,
     img: contact.img,
-    imgLarge: contact.imgLarge,
-    imgMedium: contact.imgMedium,
     name: contact.name,
     phone: contact.phone,
     _id: contact._id,
@@ -80,7 +65,7 @@ async function getUsers() {
   });
 }
 
-async function addUser(user) {
+async function saveUser(user) {
   if (user._id) {
     updateUser(user);
   } else {
@@ -91,18 +76,22 @@ async function addUser(user) {
       ...user,
       _id,
     });
-    return user;
+    add(user);
   }
+  return user;
 }
 
 async function updateUser(user) {
+  const currUser = await getByIdUser(user._id);
   const frankDocRef = doc(db, 'users', user._id);
   await setDoc(frankDocRef, {
-    password: user.password,
     coins: user.coins,
+    email: user.email,
     name: user.name,
     img: user.img,
+    _id: user._id,
     moves: user.moves,
+    password: currUser.password,
   });
 }
 
@@ -123,6 +112,11 @@ async function login(name, password) {
   return currUser;
 }
 
+async function checkUserPassword(userId, password) {
+  const currUser = await getByIdUser(userId);
+  return currUser.password === password;
+}
+
 function _makeId(length = 10) {
   var txt = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -139,8 +133,9 @@ export default {
   update,
   getById,
   getUsers,
-  addUser,
+  saveUser,
   removeUser,
   getByIdUser,
   login,
+  checkUserPassword,
 };

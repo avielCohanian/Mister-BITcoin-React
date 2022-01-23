@@ -7,15 +7,21 @@ import { MovesList } from '../cmp/MovesList';
 import { TransferFund } from '../cmp/TransferFund';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
-import { getLoggingUser } from '../store/actions/userActions';
+import { addMove, getLoggingUser } from '../store/actions/userActions';
+
+import anonymous from '../assets/imgs/anonymous.png';
+import { userService } from '../services/userService';
 
 export const ContactDetailsPage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
-
   const [currUser, setCurrUser] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
 
   const dispatch = useDispatch();
+
+  const imgData = () => {
+    return currUser.img || anonymous;
+  };
 
   useEffect(() => {
     (async () => {
@@ -32,6 +38,14 @@ export const ContactDetailsPage = (props) => {
     })();
   }, [loggedInUser]);
 
+  const transfer = async (amount) => {
+    const password = '123';
+    const isPassword = await userService.checkUserPassword(password);
+    if (!isPassword) return;
+    dispatch({ type: 'USERMSG', msg: `Transfer ${amount} to ${currUser.name}` });
+    dispatch(addMove(currUser.name, amount));
+  };
+
   if (!currUser) return <Loading />;
   return (
     <div className="contact-details-page ">
@@ -45,7 +59,7 @@ export const ContactDetailsPage = (props) => {
         </Link>
       </div>
       <article>
-        <img src={currUser.imgLarge} alt="" />
+        <div className="img-preview" style={{ backgroundImage: 'url(' + imgData() + ')' }}></div>
         <section>
           <strong>Name:</strong>
           <span>{currUser.name}</span>
@@ -58,11 +72,13 @@ export const ContactDetailsPage = (props) => {
           <strong>Email:</strong>
           <span>{currUser.email}</span>
         </section>
-        <Link className="edit" to={`/contact/edit/${currUser._id}`}>
-          Edit
-        </Link>
+        {currUser.isAdmin && (
+          <Link className="edit" to={`/contact/edit/${currUser._id}`}>
+            Edit
+          </Link>
+        )}
         <div>
-          <TransferFund currUserName={currUser.name} />
+          <TransferFund currUserName={currUser.name} transfer={transfer} />
           {loggingUser && loggingUser.moves.some((m) => m.to === currUser.name) && (
             <MovesList moves={loggingUser.moves.filter((m) => m.to === currUser.name)} title="Your moves:" />
           )}

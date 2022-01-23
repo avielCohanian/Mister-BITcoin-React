@@ -6,7 +6,6 @@ import { ContactFilter } from '../cmp/ContactFilter';
 import { ContactList } from '../cmp/ContactList';
 import { DeleteModal } from '../cmp/DeleteModel';
 import Loading from '../cmp/Loading';
-import { userService } from '../services/userService';
 import { loadContacts, removeContact, setFilterBy } from '../store/actions/contactActions';
 import { getLoggingUser } from '../store/actions/userActions';
 
@@ -56,7 +55,7 @@ export const ContactPage = (props) => {
           <AddSharpIcon />
         </Link>
       </div>
-      <ContactList removeContact={removeContactModel} contacts={contacts} />
+      <ContactList removeContact={removeContactModel} contacts={contacts} currUser={loggingUser} />
       {remove && <DeleteModal onHandleDelete={onHandleDelete} />}
     </div>
   );

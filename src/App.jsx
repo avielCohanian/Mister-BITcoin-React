@@ -10,6 +10,7 @@ import { ContactDetailsPage } from './pages/ContactDetailsPage';
 import { ContactEdit } from './pages/ContactEdit';
 import { LoginSignupPage } from './pages/LoginSignupPage';
 import { UserMsg } from './cmp/UserMsg';
+import { UserMessage } from './pages/UserMessage';
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
             <Route component={ContactPage} path="/contact" />
             <Route component={LoginSignupPage} path="/signup" />
             <Route component={StatisticPage} path="/statistic" />
+            <Route component={UserMessage} path="/messages" />
             <Route component={HomePage} path="/" />
           </Switch>
         </div>

@@ -6,7 +6,18 @@
   border-radius: 5px;
   padding: 20px 50px;
   box-shadow: -11px 6px 12px 11px #62585885;
+  z-index: 6;
+  width: 40ch;
 
+  &.success {
+    border-color: #008000;
+    background-color: #00800096;
+  }
+
+  &.failure {
+    background-color: #ef4f4fab;
+    border-color: #ff7c7c;
+  }
   &.fadein {
     display: block;
     animation: fadein 0.4s ease-in-out forwards;

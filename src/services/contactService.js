@@ -1,4 +1,5 @@
 import firebaseService from './firebase.service';
+import { userService } from './userService';
 
 export const contactService = {
   getContacts,
@@ -177,15 +178,16 @@ function sort(arr) {
 }
 
 async function getContacts(filterBy = null) {
-  let contactsToReturn = await firebaseService.query();
-  // let contactsToReturn = contacts;
-  // console.log(contactsToReturn);
-  // contactsToReturn.forEach((c) => {
-  //   _addContact(c);
-  // });
+  let contactsToReturn = await firebaseService.getUsers();
   if (filterBy) {
-    contactsToReturn = await filter(filterBy);
+    contactsToReturn = await filter(contactsToReturn, filterBy);
   }
+
+  // const contactsToReturn = contacts;
+  // contactsToReturn.forEach((c) => {
+  //   userService.signup(c);
+  // });
+
   return sort(contactsToReturn);
 }
 
@@ -198,11 +200,13 @@ async function _addContact(contact) {
 }
 
 function remove(contactId) {
-  firebaseService.remove(contactId);
+  firebaseService.removeUser(contactId);
+  // firebaseService.remove(contactId);
 }
 
 function getContactById(contactId) {
-  return firebaseService.getById(contactId);
+  return firebaseService.getByIdUser(contactId);
+  // return firebaseService.getById(contactId);
 }
 
 function _updateContact(contact) {
@@ -210,7 +214,8 @@ function _updateContact(contact) {
 }
 
 function saveContact(contact) {
-  return contact._id ? _updateContact(contact) : _addContact(contact);
+  return firebaseService.saveUser(contact);
+  // return contact._id ? _updateContact(contact) : _addContact(contact);
 }
 
 function getEmptyContact() {
@@ -221,8 +226,8 @@ function getEmptyContact() {
   };
 }
 
-async function filter({ filterBy }) {
-  let contacts = await firebaseService.query();
+async function filter(contacts, { filterBy }) {
+  // let contacts = await firebaseService.query();
   return contacts.filter((contact) => {
     if (filterBy) {
       return (

@@ -1,8 +1,4 @@
 import React, { Component, useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { connect } from 'react-redux';
-import { addMove, getLoggingUser, setLoggingUser } from '../store/actions/userActions';
 
 export const TransferFund = ({ transfer, currUserName }) => {
   const [amount, setAmount] = useState('');
@@ -30,17 +26,3 @@ export const TransferFund = ({ transfer, currUserName }) => {
     </div>
   );
 };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     loggedInUser: state.userModule.loggedInUser,
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   getLoggingUser,
-//   setLoggingUser,
-//   addMove,
-// };
-
-// export const TransferFund = connect(mapStateToProps, mapDispatchToProps)(_TransferFund);

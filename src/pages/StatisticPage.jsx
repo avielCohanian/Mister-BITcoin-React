@@ -29,7 +29,7 @@ export const StatisticPage = (props) => {
     })();
   }, []);
 
-  if (!loggingUser && !tradeVolume && !marketPrice) return <Loading />;
+  if (!loggingUser || !tradeVolume || !marketPrice) return <Loading />;
   return (
     <section className="statistic-page container">
       <h1>Chart</h1>

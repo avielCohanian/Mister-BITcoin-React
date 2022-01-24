@@ -40,10 +40,21 @@ export function logOut() {
   };
 }
 
-export function addMove(move, amount) {
+export function addMove(contact, amount) {
   return async (dispatch) => {
     try {
-      const user = await userService.addMove(move, amount);
+      const user = await userService.addMove(contact, amount);
+      dispatch({ type: 'SET_LOGGING_USER', user });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function messageDecision(ans, message) {
+  return async (dispatch) => {
+    try {
+      const user = await userService.messageDecision(ans, message);
       dispatch({ type: 'SET_LOGGING_USER', user });
     } catch (err) {
       console.log(err);

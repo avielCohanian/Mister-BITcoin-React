@@ -4,7 +4,7 @@ import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
 import { bitcoinService } from '../services/bitcoinService';
 import { userService } from '../services/userService';
-import { getLoggingUser, loginUser } from '../store/actions/userActions';
+import { getLoggingUser } from '../store/actions/userActions';
 import anonymous from '../assets/imgs/anonymous.png';
 
 export const HomePage = (props) => {

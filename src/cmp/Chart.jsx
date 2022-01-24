@@ -29,8 +29,7 @@ export const ChartStatistic = ({ values }) => {
 
   useEffect(() => {
     (async () => {
-      const marketPrice = values;
-      if (marketPrice) setMarketPrice(marketPrice);
+      if (values) setMarketPrice(values);
     })();
   }, []);
 

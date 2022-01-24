@@ -1,21 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
-import EditSharpIcon from '@material-ui/icons/EditSharp';
 import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
 import { TransferFund } from '../cmp/TransferFund';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
-import { addMove, getLoggingUser } from '../store/actions/userActions';
+import { getLoggingUser, addMove } from '../store/actions/userActions';
+import { userService } from '../services/userService';
 
 import anonymous from '../assets/imgs/anonymous.png';
-import { userService } from '../services/userService';
+import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
+import EditSharpIcon from '@material-ui/icons/EditSharp';
+import CloseIcon from '@mui/icons-material/Close';
+import PasswordIcon from '@mui/icons-material/Password';
+import SendIcon from '@mui/icons-material/Send';
 
 export const ContactDetailsPage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
   const [currUser, setCurrUser] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
+  const [isTransferMode, setIsTransferMode] = useState(false);
+  const [password, setPassword] = useState('');
+  const amount = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -38,17 +44,69 @@ export const ContactDetailsPage = (props) => {
     })();
   }, [loggedInUser]);
 
-  const transfer = async (amount) => {
-    const password = '123';
+  const transfer = async (amountToTransfer) => {
+    setIsTransferMode(true);
+    amount.current = amountToTransfer;
+  };
+
+  const closeTransferMode = () => {
+    setIsTransferMode(false);
+  };
+
+  const handleChange = ({ target }) => {
+    const value = target.type === 'number' ? +target.value : target.value;
+    setPassword(value);
+  };
+
+  const checkPassword = async (ev) => {
+    ev.preventDefault();
     const isPassword = await userService.checkUserPassword(password);
-    if (!isPassword) return;
-    dispatch({ type: 'USERMSG', msg: `Transfer ${amount} to ${currUser.name}` });
-    dispatch(addMove(currUser.name, amount));
+    setPassword('');
+    if (!isPassword) {
+      dispatch({
+        type: 'USERMSG',
+        msg: {
+          txt: `Transfer ${amount.current} to ${currUser.name} failed, the password is incorrect.`,
+          typeMsg: 'failure',
+        },
+      });
+      return;
+    }
+    closeTransferMode();
+    dispatch({
+      type: 'USERMSG',
+      msg: { txt: `Transfer ${amount.current} to ${currUser.name} was successful.`, typeMsg: 'success' },
+    });
+    dispatch(addMove(currUser, amount.current));
   };
 
   if (!currUser) return <Loading />;
   return (
     <div className="contact-details-page ">
+      <section
+        className="modal-wrapper password-model"
+        style={{ display: isTransferMode ? '' : 'none' }}
+        onClick={closeTransferMode}
+      >
+        <form onClick={(ev) => ev.stopPropagation()} onSubmit={checkPassword}>
+          <CloseIcon className="back-btn" onClick={closeTransferMode} />
+          <h1>Enter a password</h1>
+          <div className="input-container">
+            <PasswordIcon />
+            <input
+              type="password"
+              placeholder="Enter the Password"
+              name="password"
+              value={password}
+              id="password"
+              onChange={handleChange}
+              autoComplete="true"
+            />
+          </div>
+          <SendIcon className="send" onClick={checkPassword} />
+        </form>
+      </section>
+
       <div className="btn-edit-container">
         <Link className="simple-button back-btn" to="/contact">
           <ArrowBackIosSharpIcon />

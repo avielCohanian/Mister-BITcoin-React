@@ -1,19 +1,81 @@
 .contact-details-page {
   display: flex;
   position: relative;
+  z-index: 5;
+
+  .password-model {
+    form {
+      padding: 25px;
+      max-height: 400px;
+      max-width: 400px;
+      position: fixed;
+      background-color: rgb(250, 252, 250);
+      border: #64504973;
+      box-shadow: -3px 1px 28px #00000061;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      .input-container {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        margin-bottom: 35px;
+        input {
+          width: 250px;
+          height: 35px;
+          border-radius: 7px;
+          color: #252121;
+          margin: 0 8px;
+        }
+      }
+      .send {
+        bottom: 8px;
+        right: 8px;
+      }
+    }
+
+    .back-btn {
+      right: 10px;
+      top: 10px;
+    }
+
+    .back-btn,
+    .send {
+      position: absolute;
+      background: transparent;
+      color: black;
+      border: 0;
+      opacity: 0.6;
+      transition: 0.3s all;
+      padding: 0;
+
+      cursor: pointer;
+
+      &:disabled {
+        cursor: initial;
+        opacity: 0.2;
+      }
+
+      &:hover:not(:disabled) {
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  }
+
   article {
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    // width: 100%;
     margin: 0 auto;
-    // img {
-    //   width: 200px;
-    //   height: 200px;
-    //   object-fit: cover;
-    //   margin: 0 auto;
-    //   margin-top: 20px;
-    // }
+
     .img-preview {
       position: relative;
       margin: 1em auto;

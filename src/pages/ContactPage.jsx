@@ -47,7 +47,7 @@ export const ContactPage = (props) => {
 
   if (!contacts) return <Loading />;
   return (
-    <div className=" contact-page">
+    <div className="contact-page main-layout">
       <h2>Contacts</h2>
       <div className="add-contact">
         <ContactFilter onChangeFilter={onChangeFilter} />

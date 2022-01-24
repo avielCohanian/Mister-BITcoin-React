@@ -13,6 +13,6 @@ export function UserMsg() {
     }
   }, [userMsg]);
 
-  // if (!userMsg) return <div></div>;
-  return <h3 className={(userMsg ? 'fadein' : 'fadeout') + ' ' + 'user-msg'}>{userMsg}</h3>;
+  if (!userMsg) return <div></div>;
+  return <h3 className={(userMsg ? 'fadein' : 'fadeout') + ' ' + userMsg.typeMsg + ' ' + 'user-msg'}>{userMsg.txt}</h3>;
 }

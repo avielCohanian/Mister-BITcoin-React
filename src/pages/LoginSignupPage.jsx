@@ -36,8 +36,9 @@ export const LoginSignupPage = (props) => {
     if (user.name && user.password) {
       const currUser = await dispatch(loginUser(user));
       currUser
-        ? dispatch({ type: 'USERMSG', msg: `Welcome ${currUser.name}` }) && props.history.push('/')
-        : dispatch({ type: 'USERMSG', msg: `The username or password is incorrect` });
+        ? dispatch({ type: 'USERMSG', msg: { txt: `Welcome ${currUser.name}`, typeMsg: '' } }) &&
+          props.history.push('/')
+        : dispatch({ type: 'USERMSG', msg: { txt: `The username or password is incorrect`, typeMsg: '' } });
     }
   };
   return (

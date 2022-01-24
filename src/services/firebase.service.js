@@ -91,6 +91,7 @@ async function updateUser(user) {
     img: user.img,
     _id: user._id,
     moves: user.moves,
+    messages: user.messages,
     password: currUser.password,
   });
 }

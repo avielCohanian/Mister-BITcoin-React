@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   loggedInUser: null,
-  userMsg: '',
+  userMsg: null,
 };
 
 export function userReducer(state = INITIAL_STATE, action) {

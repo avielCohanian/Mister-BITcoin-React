@@ -38,7 +38,6 @@ async function getMarketPrice() {
 
 async function getConfirmedTransactions() {
   let chartData = storageService.load(tradeVolumeKEY);
-
   if (!chartData.length) {
     const { data } = await axios.get(`https://api.blockchain.info/charts/trade-volume`, {
       params: {

@@ -14,7 +14,7 @@ const USER_KEY = 'yami';
 
 async function getUser() {
   const user = storageService.load(USER_KEY);
-  return user.length ? JSON.parse(user) : null;
+  return user.length ? await firebaseService.getByIdUser(JSON.parse(user)._id) : null;
 }
 
 async function signup({ name, password, email, imgData }) {
@@ -46,11 +46,14 @@ async function checkUserPassword(password) {
   return isPassword;
 }
 async function messageDecision(ans, message) {
+  console.log(ans);
+  console.log(message);
   let currUser = await getUser();
   if (ans) {
     currUser.coins += message.amount;
     message.isAccept = true;
   } else {
+    moneyReturn(message);
     message.isAccept = false;
   }
 
@@ -63,9 +66,15 @@ async function messageDecision(ans, message) {
   return currUser;
 }
 
+async function moneyReturn(transferDetails) {
+  const user = await firebaseService.getByIdUser(transferDetails.sensUserId);
+  user.coins += transferDetails.amount;
+  await firebaseService.saveUser(user);
+}
+
 async function addMove(contact, amount) {
   const user = await getUser();
-  if (user.coins - amount < 0) return;
+  if (user.coins - amount < 0 || amount <= 0) return;
   user.coins = user.coins - amount;
   const move = {
     userId: user._id,
@@ -80,7 +89,7 @@ async function addMove(contact, amount) {
   return user;
 }
 
-async function sendCoins({ userId, at, amount }, contact) {
+async function sendCoins({ at, amount }, contact) {
   const contactTo = await firebaseService.getByIdUser(contact._id);
   const currUser = await getUser();
   const move = {

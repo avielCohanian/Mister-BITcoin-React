@@ -22,12 +22,19 @@ export const ContactDetailsPage = (props) => {
   const [isTransferMode, setIsTransferMode] = useState(false);
   const [password, setPassword] = useState('');
   const amount = useRef(null);
+  const inputRef = useRef(null);
 
   const dispatch = useDispatch();
 
   const imgData = () => {
     return currUser.img || anonymous;
   };
+
+  useEffect(() => {
+    if (isTransferMode) {
+      inputRef.current.focus();
+    }
+  }, [isTransferMode]);
 
   useEffect(() => {
     (async () => {
@@ -73,11 +80,13 @@ export const ContactDetailsPage = (props) => {
       return;
     }
     closeTransferMode();
-    dispatch({
-      type: 'USERMSG',
-      msg: { txt: `Transfer ${amount.current} to ${currUser.name} was successful.`, typeMsg: 'success' },
-    });
-    dispatch(addMove(currUser, amount.current));
+    const user = await dispatch(addMove(currUser, amount.current));
+    if (user) {
+      dispatch({
+        type: 'USERMSG',
+        msg: { txt: `Transfer ${amount.current} to ${currUser.name} was successful.`, typeMsg: 'success' },
+      });
+    }
   };
 
   if (!currUser) return <Loading />;
@@ -93,6 +102,7 @@ export const ContactDetailsPage = (props) => {
           <h1>Enter a password</h1>
           <div className="input-container">
             <PasswordIcon />
+
             <input
               type="password"
               placeholder="Enter the Password"
@@ -101,6 +111,7 @@ export const ContactDetailsPage = (props) => {
               id="password"
               onChange={handleChange}
               autoComplete="true"
+              ref={inputRef}
             />
           </div>
           <SendIcon className="send" onClick={checkPassword} />

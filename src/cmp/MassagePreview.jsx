@@ -10,7 +10,7 @@ export function MassagePreview({ message, sendAns }) {
         <b className="from">{message.from}</b>
         <p className="at">{new Date(message.at).toLocaleString()}</p>
       </div>
-      {!message.isAccept && (
+      {!message.isOpening && (
         <div className="btn-container">
           <a className="accept" onClick={() => sendAns(true, message)}>
             Accept

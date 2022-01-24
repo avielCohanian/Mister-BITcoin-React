@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 export function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'SET_LOGGING_USER':
-      // const { loggedInUser } = state;
       return {
         ...state,
         loggedInUser: action.user,

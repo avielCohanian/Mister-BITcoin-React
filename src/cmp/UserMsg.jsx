@@ -8,7 +8,7 @@ export function UserMsg() {
   useEffect(() => {
     if (userMsg) {
       setTimeout(() => {
-        dispatch({ type: 'USERMSG', msg: '' });
+        dispatch({ type: 'USERMSG', msg: null });
       }, 3000);
     }
   }, [userMsg]);

@@ -15,7 +15,7 @@ const contacts = [
     name: 'Dominique Soto',
     email: 'dominiquesoto@renovize.com',
     phone: '+1 (807) 551-3258',
-    img: 'https://randomuser.me/api/portraits/thumb/men/10.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/10.jpg',
     password: '12',
   },
   {
@@ -23,7 +23,7 @@ const contacts = [
     name: 'Faulkner Flores',
     email: 'faulknerflores@renovize.com',
     phone: '+1 (952) 501-2678',
-    img: 'https://randomuser.me/api/portraits/thumb/men/3.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/3.jpg',
     password: '12',
   },
   {
@@ -31,7 +31,7 @@ const contacts = [
     name: 'Floyd Rutledge',
     email: 'floydrutledge@renovize.com',
     phone: '+1 (807) 597-3629',
-    img: 'https://randomuser.me/api/portraits/thumb/women/10.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/10.jpg',
     password: '12',
   },
   {
@@ -39,7 +39,7 @@ const contacts = [
     name: 'Glenna Santana',
     email: 'glennasantana@renovize.com',
     phone: '+1 (860) 467-2376',
-    img: 'https://randomuser.me/api/portraits/thumb/men/94.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/94.jpg',
     password: '12',
   },
   {
@@ -47,7 +47,7 @@ const contacts = [
     name: 'Grace James',
     email: 'gracejames@renovize.com',
     phone: '+1 (959) 525-2529',
-    img: 'https://randomuser.me/api/portraits/thumb/women/36.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/36.jpg',
     password: '12',
   },
   {
@@ -55,7 +55,7 @@ const contacts = [
     name: 'Hallie Mclean',
     email: 'halliemclean@renovize.com',
     phone: '+1 (948) 464-2888',
-    img: 'https://randomuser.me/api/portraits/thumb/women/10.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/10.jpg',
     password: '12',
   },
   {
@@ -63,7 +63,7 @@ const contacts = [
     name: 'Holder Bean',
     email: 'holderbean@renovize.com',
     phone: '+1 (989) 503-2663',
-    img: 'https://randomuser.me/api/portraits/thumb/women/2.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/2.jpg',
     password: '12',
   },
   {
@@ -71,7 +71,7 @@ const contacts = [
     name: 'Lilly Conner',
     email: 'lillyconner@renovize.com',
     phone: '+1 (842) 587-3812',
-    img: 'https://randomuser.me/api/portraits/thumb/men/68.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/68.jpg',
     password: '12',
   },
   {
@@ -79,7 +79,7 @@ const contacts = [
     name: 'Malone Clark',
     email: 'maloneclark@renovize.com',
     phone: '+1 (818) 565-2557',
-    img: 'https://randomuser.me/api/portraits/thumb/women/19.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/19.jpg',
     password: '12',
   },
   {
@@ -87,7 +87,7 @@ const contacts = [
     name: 'Nguyen Walls',
     email: 'nguyenwalls@renovize.com',
     phone: '+1 (963) 471-3181',
-    img: 'https://randomuser.me/api/portraits/thumb/men/99.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/99.jpg',
     password: '12',
   },
   {
@@ -95,7 +95,7 @@ const contacts = [
     name: 'Ochoa Hyde',
     email: 'ochoahyde@renovize.com',
     phone: '+1 (968) 593-3824',
-    img: 'https://randomuser.me/api/portraits/thumb/women/1.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/1.jpg',
     password: '12',
   },
   {
@@ -103,7 +103,7 @@ const contacts = [
     name: 'Ollie Christian',
     email: 'olliechristian@renovize.com',
     phone: '+1 (977) 419-3550',
-    img: 'https://randomuser.me/api/portraits/thumb/men/99.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/99.jpg',
     password: '12',
   },
   {
@@ -111,7 +111,7 @@ const contacts = [
     name: 'Pamela Nolan',
     email: 'pamelanolan@renovize.com',
     phone: '+1 (986) 545-2166',
-    img: 'https://randomuser.me/api/portraits/thumb/men/6.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/6.jpg',
     password: '12',
   },
   {
@@ -119,7 +119,7 @@ const contacts = [
     name: 'Parsons Norris',
     email: 'parsonsnorris@renovize.com',
     phone: '+1 (958) 502-3495',
-    img: 'https://randomuser.me/api/portraits/thumb/women/33.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/33.jpg',
     password: '12',
   },
   {
@@ -127,7 +127,7 @@ const contacts = [
     name: 'Rachel Lowe',
     email: 'rachellowe@renovize.com',
     phone: '+1 (911) 475-2312',
-    img: 'https://randomuser.me/api/portraits/thumb/women/56.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/56.jpg',
     password: '12',
   },
   {
@@ -135,7 +135,7 @@ const contacts = [
     name: 'Rosanne Shelton',
     email: 'rosanneshelton@renovize.com',
     phone: '+1 (968) 454-3851',
-    img: 'https://randomuser.me/api/portraits/thumb/women/83.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/83.jpg',
     password: '12',
   },
   {
@@ -143,7 +143,7 @@ const contacts = [
     name: 'Roy Cantu',
     email: 'roycantu@renovize.com',
     phone: '+1 (929) 571-2295',
-    img: 'https://randomuser.me/api/portraits/thumb/men/88.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/88.jpg',
     password: '12',
   },
   {
@@ -151,7 +151,7 @@ const contacts = [
     name: 'Shana Pope',
     email: 'shanapope@renovize.com',
     phone: '+1 (970) 527-3082',
-    img: 'https://randomuser.me/api/portraits/thumb/men/78.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/men/78.jpg',
     password: '12',
   },
   {
@@ -159,7 +159,7 @@ const contacts = [
     name: 'Tanner Gates',
     email: 'tannergates@renovize.com',
     phone: '+1 (978) 591-2291',
-    img: 'https://randomuser.me/api/portraits/thumb/women/65.jpg',
+    imgData: 'https://randomuser.me/api/portraits/thumb/women/65.jpg',
     password: '12',
   },
 ];

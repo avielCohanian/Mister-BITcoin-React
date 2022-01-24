@@ -44,7 +44,17 @@ export function addMove(contact, amount) {
   return async (dispatch) => {
     try {
       const user = await userService.addMove(contact, amount);
+      if (!user) {
+        dispatch({
+          type: 'USERMSG',
+          msg: {
+            txt: `Transfer failed!`,
+            typeMsg: 'failure',
+          },
+        });
+      }
       dispatch({ type: 'SET_LOGGING_USER', user });
+      return user;
     } catch (err) {
       console.log(err);
     }

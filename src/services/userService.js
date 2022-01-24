@@ -9,12 +9,20 @@ export const userService = {
   login,
   checkUserPassword,
   messageDecision,
+  updateUser,
+  getUserForDisplay,
+  removeUser,
 };
 const USER_KEY = 'yami';
 
 async function getUser() {
   const user = storageService.load(USER_KEY);
   return user.length ? await firebaseService.getByIdUser(JSON.parse(user)._id) : null;
+}
+async function getUserForDisplay() {
+  let currUser = await getUser();
+  delete currUser.password;
+  return currUser;
 }
 
 async function signup({ name, password, email, imgData }) {
@@ -40,14 +48,26 @@ function logOut() {
   storageService.remove(USER_KEY);
 }
 
+async function updateUser(user) {
+  let currUser = await getUser();
+  currUser = { ...currUser, ...user };
+  await firebaseService.saveUser(currUser);
+  return currUser;
+}
+
+async function removeUser(user) {
+  let currUser = await getUser();
+  await firebaseService.removeUser(currUser._id);
+  logOut();
+  return currUser;
+}
+
 async function checkUserPassword(password) {
   const currUser = await getUser();
   const isPassword = await firebaseService.checkUserPassword(currUser._id, password);
   return isPassword;
 }
 async function messageDecision(ans, message) {
-  console.log(ans);
-  console.log(message);
   let currUser = await getUser();
   if (ans) {
     currUser.coins += message.amount;

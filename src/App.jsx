@@ -11,6 +11,7 @@ import { ContactEdit } from './pages/ContactEdit';
 import { LoginSignupPage } from './pages/LoginSignupPage';
 import { UserMsg } from './cmp/UserMsg';
 import { UserMessage } from './pages/UserMessage';
+import { UserSetting } from './pages/UserSetting';
 
 export function App() {
   return (
@@ -26,6 +27,7 @@ export function App() {
             <Route component={LoginSignupPage} path="/signup" />
             <Route component={StatisticPage} path="/statistic" />
             <Route component={UserMessage} path="/messages" />
+            <Route component={UserSetting} path="/setting" />
             <Route component={HomePage} path="/" />
           </Switch>
         </div>

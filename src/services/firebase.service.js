@@ -92,12 +92,12 @@ async function updateUser(user) {
     _id: user._id,
     moves: user.moves,
     messages: user.messages,
-    password: currUser.password,
+    password: user.password ? user.password : currUser.password,
   });
 }
 
 async function removeUser(userId) {
-  await deleteDoc(doc(db, 'users', userId));
+  return await deleteDoc(doc(db, 'users', userId));
 }
 
 async function getByIdUser(userId) {

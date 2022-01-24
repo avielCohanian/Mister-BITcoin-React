@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { contactService } from '../services/contactService';
 import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 import Loading from '../cmp/Loading';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
 
 export const ContactEdit = (props) => {
+  const { loggedInUser } = useSelector((state) => state.userModule);
+
   const [contact, setContact] = useState(null);
   const dispatch = useDispatch();
 
@@ -24,6 +26,13 @@ export const ContactEdit = (props) => {
 
   const onSaveContact = async (ev) => {
     ev.preventDefault();
+    if (!loggedInUser.isAdmin) {
+      dispatch({
+        type: 'USERMSG',
+        msg: { txt: `You do not have access to perform the operation.`, typeMsg: 'failure' },
+      });
+      return;
+    }
     await contactService.saveContact({ ...contact });
     props.history.push('/contact');
   };

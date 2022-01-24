@@ -14,13 +14,15 @@ import EditSharpIcon from '@material-ui/icons/EditSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import PasswordIcon from '@mui/icons-material/Password';
 import SendIcon from '@mui/icons-material/Send';
+import { useInput } from '../hooks/useInput';
 
 export const ContactDetailsPage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
   const [currUser, setCurrUser] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
   const [isTransferMode, setIsTransferMode] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, bindPassword, resatPassword] = useInput('');
+
   const amount = useRef(null);
   const inputRef = useRef(null);
 
@@ -60,15 +62,10 @@ export const ContactDetailsPage = (props) => {
     setIsTransferMode(false);
   };
 
-  const handleChange = ({ target }) => {
-    const value = target.type === 'number' ? +target.value : target.value;
-    setPassword(value);
-  };
-
   const checkPassword = async (ev) => {
     ev.preventDefault();
     const isPassword = await userService.checkUserPassword(password);
-    setPassword('');
+    resatPassword();
     if (!isPassword) {
       dispatch({
         type: 'USERMSG',
@@ -107,9 +104,8 @@ export const ContactDetailsPage = (props) => {
               type="password"
               placeholder="Enter the Password"
               name="password"
-              value={password}
+              {...bindPassword}
               id="password"
-              onChange={handleChange}
               autoComplete="true"
               ref={inputRef}
             />

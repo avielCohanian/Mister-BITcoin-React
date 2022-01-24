@@ -2,7 +2,7 @@ import { userService } from '../../services/userService';
 
 export function getLoggingUser() {
   return async () => {
-    return userService.getUser();
+    return userService.getUserForDisplay();
   };
 }
 
@@ -34,6 +34,27 @@ export function logOut() {
     try {
       const user = await userService.logOut();
       dispatch({ type: 'LOGOUT' });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+export function updateUser(user) {
+  return async (dispatch) => {
+    try {
+      const updateUser = await userService.updateUser(user);
+      dispatch({ type: 'SET_LOGGING_USER', updateUser });
+      return updateUser;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+export function removeUser(user) {
+  return async (dispatch) => {
+    try {
+      await userService.removeUser(user);
+      dispatch({ type: 'SET_LOGGING_USER', user: null });
     } catch (err) {
       console.log(err);
     }

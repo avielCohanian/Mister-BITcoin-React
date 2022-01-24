@@ -11,6 +11,7 @@ export const PhotoCapture = ({ onDone }) => {
   const picture = useRef(null);
   const videoPlayer = useRef(null);
   const canvasElement = useRef(null);
+  const [imageName, setImageName] = useState('');
 
   const [showVideo, setShowVideo] = useState(true);
   const [pickImage, setPickImage] = useState(false);
@@ -18,6 +19,7 @@ export const PhotoCapture = ({ onDone }) => {
   useEffect(() => {
     (async () => {
       await streamUserMediaVideo();
+      console.log(imageName);
     })();
   }, []);
 
@@ -62,6 +64,8 @@ export const PhotoCapture = ({ onDone }) => {
     var reader = new FileReader();
     reader.onload = (event) => (picture.current = event.target.result);
     reader.readAsDataURL(ev.target.files[0]);
+    setImageName(ev.target.files[0].name);
+    console.log(imageName);
   };
 
   const done = (ev) => {
@@ -79,16 +83,19 @@ export const PhotoCapture = ({ onDone }) => {
       {pickImage ? (
         <div>
           <h2>Upload a clear Photo</h2>
-          <label htmlFor="image-picker" className="image-picker">
-            <DriveFolderUploadSharpIcon className="material-icons upload-img"></DriveFolderUploadSharpIcon>
-            <input type="file" accept="image/*" name="image-picker" id="image-picker" onChange={upload} hidden />
-          </label>
-          <div className="upload-actions">
-            <button type="button" className="btn-capture simple-button ok-btn" onClick={done}>
-              {/* stop popogation */}
-              <RedoSharpIcon className="material-icons next-btn"></RedoSharpIcon>
-            </button>
+          <div className="btn-container">
+            <label htmlFor="image-picker" className="image-picker">
+              <DriveFolderUploadSharpIcon className="material-icons upload-img"></DriveFolderUploadSharpIcon>
+              <input type="file" accept="image/*" name="image-picker" id="image-picker" onChange={upload} hidden />
+            </label>
+            <div className="upload-actions">
+              <button type="button" className="btn-capture simple-button ok-btn" title="next" onClick={done}>
+                {/* stop popogation */}
+                <RedoSharpIcon className="material-icons next-btn"></RedoSharpIcon>
+              </button>
+            </div>
           </div>
+          <p>{imageName}</p>
         </div>
       ) : (
         ''

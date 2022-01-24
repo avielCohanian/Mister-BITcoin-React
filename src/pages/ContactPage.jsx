@@ -40,6 +40,14 @@ export const ContactPage = (props) => {
 
   const onHandleDelete = (val) => {
     if (val) {
+      if (!loggedInUser.isAdmin) {
+        dispatch({
+          type: 'USERMSG',
+          msg: { txt: `You do not have access to perform the operation.`, typeMsg: 'failure' },
+        });
+        setRemove(null);
+        return;
+      }
       dispatch(removeContact(remove));
     }
     setRemove(null);

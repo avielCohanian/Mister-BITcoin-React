@@ -5,7 +5,10 @@ import { MovesList } from '../cmp/MovesList';
 import { bitcoinService } from '../services/bitcoinService';
 import { userService } from '../services/userService';
 import { getLoggingUser } from '../store/actions/userActions';
+
+import SettingsIcon from '@mui/icons-material/Settings';
 import anonymous from '../assets/imgs/anonymous.png';
+import { Link } from 'react-router-dom';
 
 export const HomePage = (props) => {
   const [user, setUser] = useState(null);
@@ -15,8 +18,8 @@ export const HomePage = (props) => {
 
   useEffect(() => {
     (async () => {
-      dispatch(getLoggingUser());
-      const user = await userService.getUser();
+      const user = await dispatch(getLoggingUser());
+      //  userService.getUser();
       if (!user) props.history.push('/signup');
       dispatch({ type: 'SET_LOGGING_USER', user });
       setUser(user);
@@ -40,6 +43,9 @@ export const HomePage = (props) => {
 
   return (
     <div className="home-page">
+      <Link className="simple-button setting-btn" to="/setting">
+        <SettingsIcon />
+      </Link>
       <section>
         <div className="img-preview" style={{ backgroundImage: 'url(' + imgData() + ')' }}></div>
         <h3>Hello {user.name}!</h3>

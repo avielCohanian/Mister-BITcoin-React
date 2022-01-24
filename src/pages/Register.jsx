@@ -11,6 +11,7 @@ import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 export const Register = ({ signup, login }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
+
   const [user, setUser] = useState({
     name: '',
     password: '',
@@ -35,6 +36,7 @@ export const Register = ({ signup, login }) => {
   const imgData = () => {
     return user.imgData || anonymous;
   };
+
   const isValid = () => {
     return user.name && user.password;
   };

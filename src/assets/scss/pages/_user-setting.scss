@@ -1,0 +1,37 @@
+.user-setting {
+  form {
+    input {
+      border-radius: 6px;
+      background-color: #f0f8ff5c;
+      margin-bottom: 15px;
+    }
+    .save-btn {
+      background-color: #00800099;
+      &:hover {
+        background-color: #008000ad;
+        color: #fff;
+      }
+    }
+    .change-img {
+      cursor: pointer;
+      margin-bottom: 15px;
+      padding: 7px;
+    }
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+  .delete-btn {
+    background-color: #4e23231c;
+    color: #f00;
+    &:hover {
+      background-color: #ff00008c;
+      color: #fff;
+    }
+  }
+}

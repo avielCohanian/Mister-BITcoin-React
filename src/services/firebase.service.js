@@ -11,50 +11,9 @@ const firebaseConfig = {
   measurementId: 'G-0BBPRRGHQT',
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const db = getFirestore();
-const dataRef = collection(db, 'contacts');
 const dataRefUser = collection(db, 'users');
-
-async function query() {
-  let querySnapshot = await getDocs(dataRef);
-  return querySnapshot.docs.map((doc) => {
-    let contact = doc.data();
-    contact._id = doc.id;
-    return contact;
-  });
-}
-
-async function add(contact) {
-  if (contact._id) {
-    update(contact);
-  } else {
-    const _id = _makeId();
-    await addDoc(dataRef, {
-      ...contact,
-      _id,
-    });
-  }
-}
-async function remove(contactId) {
-  await deleteDoc(doc(db, 'contacts', contactId));
-}
-
-async function getById(contactId) {
-  let contacts = await query();
-  return contacts.find((t) => t._id === contactId);
-}
-
-async function update(contact) {
-  const frankDocRef = doc(db, 'contacts', contact._id);
-  await setDoc(frankDocRef, {
-    email: contact.email,
-    img: contact.img,
-    name: contact.name,
-    phone: contact.phone,
-    _id: contact._id,
-  });
-}
 
 async function getUsers() {
   let querySnapshot = await getDocs(dataRefUser);
@@ -76,7 +35,6 @@ async function saveUser(user) {
       ...user,
       _id,
     });
-    add(user);
   }
   return user;
 }
@@ -128,11 +86,6 @@ function _makeId(length = 10) {
 }
 
 export default {
-  add,
-  query,
-  remove,
-  update,
-  getById,
   getUsers,
   saveUser,
   removeUser,

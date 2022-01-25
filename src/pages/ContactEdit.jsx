@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { contactService } from '../services/contactService';
-import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 import Loading from '../cmp/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
+
+import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 
 export const ContactEdit = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);

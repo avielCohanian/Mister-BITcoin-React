@@ -4,7 +4,7 @@
   top: 80px;
   background-color: #f0ffff52;
   border-radius: 5px;
-  padding: 20px 40px;
+  padding: 20px;
   box-shadow: -11px 6px 12px 11px #62585885;
   z-index: 6;
   width: 40ch;
@@ -25,5 +25,11 @@
   &.fadeout {
     animation: fadeout 0.25s ease-in-out forwards;
     display: none;
+  }
+}
+
+@include for-mobile-layout {
+  .user-msg {
+    width: 200px;
   }
 }

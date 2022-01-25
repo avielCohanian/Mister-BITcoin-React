@@ -29,7 +29,7 @@ export const AppHeader = () => {
 
   return (
     <header className="app-header">
-      <Link className="simple-button" to="/">
+      <Link className="simple-button web-link" to="/">
         Mister-BITCoin
       </Link>
       <div className="links">

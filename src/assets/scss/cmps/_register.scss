@@ -102,6 +102,15 @@
   input.ng-valid[required] {
     border-left: 5px solid green;
   }
+
+  input:invalid {
+    // border-left: 5px solid red;
+  }
+
+  input:valid {
+    border-left: 5px solid green;
+  }
+
   .footer {
     text-align: center;
   }

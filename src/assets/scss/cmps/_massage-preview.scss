@@ -56,3 +56,15 @@
     }
   }
 }
+
+@include for-mobile-layout {
+  .massage-preview {
+    width: 100%;
+    .massage-amount {
+      .is-open {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}

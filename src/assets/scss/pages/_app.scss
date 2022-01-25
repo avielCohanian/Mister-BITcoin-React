@@ -45,3 +45,25 @@
     // background-color: #0000001a;
   }
 }
+
+@include for-mobile-layout {
+  .app {
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-content: center;
+      .links {
+        position: relative;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .web-link {
+        display: none;
+      }
+    }
+  }
+}

@@ -191,31 +191,16 @@ async function getContacts(filterBy = null) {
   return sort(contactsToReturn);
 }
 
-async function _addContact(contact) {
-  // const img = await axios.get('https://randomuser.me/api/?results=1');
-  // contact.img = img.data.results[0].picture.thumbnail;
-  // contact.imgMedium = img.data.results[0].picture.medium;
-  // contact.imgLarge = img.data.results[0].picture.large;
-  firebaseService.add(contact);
-}
-
 function remove(contactId) {
   firebaseService.removeUser(contactId);
-  // firebaseService.remove(contactId);
 }
 
 function getContactById(contactId) {
   return firebaseService.getByIdUser(contactId);
-  // return firebaseService.getById(contactId);
-}
-
-function _updateContact(contact) {
-  return firebaseService.update(contact);
 }
 
 function saveContact(contact) {
   return firebaseService.saveUser(contact);
-  // return contact._id ? _updateContact(contact) : _addContact(contact);
 }
 
 function getEmptyContact() {
@@ -227,7 +212,6 @@ function getEmptyContact() {
 }
 
 async function filter(contacts, { filterBy }) {
-  // let contacts = await firebaseService.query();
   return contacts.filter((contact) => {
     if (filterBy) {
       return (

@@ -63,6 +63,9 @@
 }
 
 @include for-mobile-layout {
-  .contact-page {
+  .add-contact {
+    .add-btn {
+      z-index: 1;
+    }
   }
 }

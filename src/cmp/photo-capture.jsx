@@ -4,6 +4,7 @@ import DriveFolderUploadSharpIcon from '@mui/icons-material/DriveFolderUploadSha
 import RedoSharpIcon from '@mui/icons-material/RedoSharp';
 import CameraAltSharpIcon from '@mui/icons-material/CameraAltSharp';
 import UndoSharpIcon from '@mui/icons-material/UndoSharp';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
 
 export const PhotoCapture = ({ onDone }) => {
@@ -65,12 +66,15 @@ export const PhotoCapture = ({ onDone }) => {
     reader.onload = (event) => (picture.current = event.target.result);
     reader.readAsDataURL(ev.target.files[0]);
     setImageName(ev.target.files[0].name);
-    console.log(imageName);
   };
 
   const done = (ev) => {
     ev.preventDefault();
     onDone(picture.current);
+  };
+
+  const change = () => {
+    setPickImage(!pickImage);
   };
 
   const cancel = () => {
@@ -80,7 +84,7 @@ export const PhotoCapture = ({ onDone }) => {
 
   return (
     <div className={!enableCamera.current ? 'none' : '' + ' ' + 'photo-capture'}>
-      {pickImage ? (
+      {pickImage && (
         <div>
           <h2>Upload a clear Photo</h2>
           <div className="btn-container">
@@ -97,11 +101,9 @@ export const PhotoCapture = ({ onDone }) => {
           </div>
           <p>{imageName}</p>
         </div>
-      ) : (
-        ''
       )}
 
-      {!pickImage ? (
+      {!pickImage && (
         <div className="video-container">
           <video ref={videoPlayer} className={(!showVideo ? 'none' : '') + ' ' + 'camera'} autoPlay playsInline></video>
 
@@ -128,9 +130,11 @@ export const PhotoCapture = ({ onDone }) => {
               ''
             )}
           </div>
+          <button className="simple-button add-btn" onClick={change}>
+            <AddPhotoAlternateIcon />
+            Add img
+          </button>
         </div>
-      ) : (
-        ''
       )}
     </div>
   );

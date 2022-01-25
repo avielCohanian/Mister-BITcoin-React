@@ -25,7 +25,7 @@ async function getUserForDisplay() {
   return currUser;
 }
 
-async function signup({ name, password, email, imgData }) {
+async function signup({ name, password, email, imgData, phone }) {
   const user = {
     name,
     password,
@@ -34,7 +34,9 @@ async function signup({ name, password, email, imgData }) {
     coins: 100,
     moves: [],
     messages: [],
+    phone,
   };
+
   const addUser = await firebaseService.saveUser(user);
   return addUser ? await login(user) : null;
 }

@@ -7,6 +7,8 @@ import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
 import CameraEnhanceSharpIcon from '@mui/icons-material/CameraEnhanceSharp';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { useDispatch } from 'react-redux';
 
 export const Register = ({ signup, login }) => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -16,8 +18,10 @@ export const Register = ({ signup, login }) => {
     name: '',
     password: '',
     email: '',
+    phone: '',
     imgData: null,
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setUser({
@@ -53,8 +57,19 @@ export const Register = ({ signup, login }) => {
     if (user.name && user.password && user.email) {
       setIsProcessing(true);
       const userImg = imgData();
-      await setUser({ ...user, imgData: 'userImg' });
+      await setUser({ ...user, imgData: userImg });
       setTimeout(() => {
+        if (
+          !/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test(
+            user.email
+          )
+        ) {
+          dispatch({
+            type: 'USERMSG',
+            msg: { txt: `The email is invalid`, typeMsg: 'failure' },
+          });
+          return;
+        }
         signup(user);
       }, 1200);
     }
@@ -63,28 +78,20 @@ export const Register = ({ signup, login }) => {
   return (
     <div className="register-container simple-form">
       <form onSubmit={register} className="form-register">
-        <div className={(isCameraVisible ? 'show' : '') + ' ' + 'capture-container'}>
-          {isCameraVisible ? <PhotoCapture onDone={capturePhoto}></PhotoCapture> : ''}
+        <div className={(isCameraVisible && 'show') + ' ' + 'capture-container'}>
+          {isCameraVisible && <PhotoCapture onDone={capturePhoto} />}
         </div>
         <div className="img-container">
           <div className="img-preview" style={{ backgroundImage: 'url(' + imgData() + ')' }} onClick={showCamera}>
-            {!isProcessing ? (
-              <CameraEnhanceSharpIcon className="material-icons btn-set-photo simple-button"></CameraEnhanceSharpIcon>
-            ) : (
-              ''
-            )}
-            {isProcessing ? (
-              <CheckSharpIcon className="material-icons btn-set-photo simple-button"></CheckSharpIcon>
-            ) : (
-              ''
-            )}
-            {isProcessing ? <div className="background verify-image"></div> : ''}
+            {!isProcessing && <CameraEnhanceSharpIcon className="material-icons btn-set-photo simple-button" />}
+            {isProcessing && <CheckSharpIcon className="material-icons btn-set-photo simple-button" />}
+            {isProcessing && <div className="background verify-image"></div>}
           </div>
         </div>
 
         <div className="field">
           <label className="field-icon">
-            <AccountCircleSharpIcon className="material-icons"></AccountCircleSharpIcon>
+            <AccountCircleSharpIcon className="material-icons" />
           </label>
           <input
             type="text"
@@ -100,7 +107,7 @@ export const Register = ({ signup, login }) => {
 
         <div className="field">
           <label className="field-icon">
-            <PasswordSharpIcon className="material-icons"></PasswordSharpIcon>
+            <PasswordSharpIcon className="material-icons" />
           </label>
           <input
             type="password"
@@ -117,7 +124,7 @@ export const Register = ({ signup, login }) => {
 
         <div className="field">
           <label className="field-icon">
-            <AlternateEmailSharpIcon className="material-icons"></AlternateEmailSharpIcon>
+            <AlternateEmailSharpIcon className="material-icons" />
           </label>
           <input
             type="email"
@@ -128,6 +135,24 @@ export const Register = ({ signup, login }) => {
             id="email"
             placeholder="Email"
             autoComplete="on"
+            required
+          />
+        </div>
+        <div className="field">
+          <label className="field-icon">
+            <LocalPhoneIcon className="material-icons" />
+          </label>
+          <input
+            type="tel"
+            className="field-input"
+            onChange={handleChange}
+            value={user.phone || ''}
+            name="phone"
+            id="phone"
+            placeholder="Phone number"
+            autoComplete="on"
+            minLength="9"
+            maxLength="14"
             required
           />
         </div>

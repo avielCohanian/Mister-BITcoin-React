@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../hooks/useForm';
 import { getLoggingUser, removeUser, updateUser } from '../store/actions/userActions';
-import Loading from '../cmp/Loading';
 import { DeleteModal } from '../cmp/DeleteModel';
 import { PhotoCapture } from '../cmp/photo-capture';
+import { Link } from 'react-router-dom';
+import Loading from '../cmp/Loading';
+import anonymous from '../assets/imgs/anonymous.png';
 
+import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 export const UserSetting = (props) => {
@@ -28,7 +31,7 @@ export const UserSetting = (props) => {
     await dispatch(updateUser(user));
     dispatch({
       type: 'USERMSG',
-      msg: { txt: `${loggedInUser.name} was updated`, typeMsg: 'success' },
+      msg: { txt: `${user.name} was updated`, typeMsg: 'success' },
     });
   };
 
@@ -41,6 +44,10 @@ export const UserSetting = (props) => {
   };
   const deleteUser = async () => {
     setRemove(true);
+  };
+
+  const imgData = () => {
+    return user.img || anonymous;
   };
 
   const onHandleDelete = async (val) => {
@@ -58,6 +65,10 @@ export const UserSetting = (props) => {
   if (!user) return <Loading />;
   return (
     <section className="main-layout simple-form user-setting">
+      <Link className="simple-button back-btn" to="/">
+        <ArrowBackIosSharpIcon />
+        Back
+      </Link>
       <h1>Setting</h1>
       {isChangeImg && (
         <section>
@@ -71,6 +82,8 @@ export const UserSetting = (props) => {
       {!isChangeImg && (
         <>
           <form onSubmit={update} className="simple-form">
+            <div className="img-preview" style={{ backgroundImage: 'url(' + imgData() + ')' }}></div>
+
             <section>
               <label htmlFor="name">Name</label>
               <input placeholder="Name" onChange={handleChange} value={user.name} type="text" name="name" id="name" />

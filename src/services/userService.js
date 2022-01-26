@@ -1,4 +1,4 @@
-import firebaseService from './firebase.service';
+import firebaseService, { currUser, user } from './firebase.service';
 import { storageService } from './storageService';
 
 export const userService = {
@@ -12,21 +12,23 @@ export const userService = {
   updateUser,
   getUserForDisplay,
   removeUser,
+  loginGoogle,
+  signupGoogle,
 };
 const USER_KEY = 'yami';
 
 async function getUser() {
-  const user = storageService.load(USER_KEY);
-  return user.length ? await firebaseService.getByIdUser(JSON.parse(user)._id) : null;
+  const user = currUser;
+  return user ? await firebaseService.getByEmailUser(user.email) : null;
 }
 async function getUserForDisplay() {
   let currUser = await getUser();
-  delete currUser.password;
+  delete currUser?.password;
   return currUser;
 }
 
-async function signup({ name, password, email, imgData, phone }) {
-  const user = {
+function _makeUser({ name, password, email, imgData, phone }) {
+  return {
     name,
     password,
     email,
@@ -36,17 +38,36 @@ async function signup({ name, password, email, imgData, phone }) {
     messages: [],
     phone,
   };
-
-  const addUser = await firebaseService.saveUser(user);
-  return addUser ? await login(user) : null;
 }
 
-async function login({ name, password }) {
-  const user = await firebaseService.login(name, password);
-  if (user) storageService.store(USER_KEY, user);
+async function signup(user, type) {
+  const userToSave = _makeUser(user);
+  const addUser = await firebaseService.saveUser(userToSave, type);
+  storageService.store(USER_KEY, addUser);
+  return addUser;
+  return addUser ? await login(userToSave) : null;
+}
+
+async function signupGoogle() {
+  let user = await firebaseService.signInWithGoogle();
+  user = await signup(user, 'google');
+  return user;
+}
+
+async function loginGoogle() {
+  let user = await firebaseService.loginWithGoogle();
+  user = await firebaseService.getByEmailUser(user.email);
+  storageService.store(USER_KEY, user);
+  return user;
+}
+async function login({ email, password }) {
+  let user = await firebaseService.loginUser(email, password);
+  user = await firebaseService.getByEmailUser(user.email);
+  storageService.store(USER_KEY, user);
   return user;
 }
 function logOut() {
+  firebaseService.logOut();
   storageService.remove(USER_KEY);
 }
 
@@ -66,7 +87,11 @@ async function removeUser(user) {
 
 async function checkUserPassword(password) {
   const currUser = await getUser();
-  const isPassword = await firebaseService.checkUserPassword(currUser._id, password);
+  if (!currUser.password) {
+    return 'no-password';
+  }
+  let isPassword = await firebaseService.checkUserPassword(currUser._id, password);
+  console.log(isPassword);
   return isPassword;
 }
 async function messageDecision(ans, message) {

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PhotoCapture } from '../cmp/photo-capture';
+import { useDispatch } from 'react-redux';
 import anonymous from '../assets/imgs/anonymous.png';
 
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
@@ -8,9 +9,10 @@ import CameraEnhanceSharpIcon from '@mui/icons-material/CameraEnhanceSharp';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import { useDispatch } from 'react-redux';
+import GoogleIcon from '@mui/icons-material/Google';
+import firebaseService from '../services/firebase.service';
 
-export const Register = ({ signup, login }) => {
+export const Register = ({ signup, googleSignup }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
 
@@ -27,6 +29,8 @@ export const Register = ({ signup, login }) => {
     setUser({
       name: '',
       password: '',
+      email: '',
+      phone: '',
       imgData: '',
     });
   }, []);
@@ -53,9 +57,11 @@ export const Register = ({ signup, login }) => {
   };
 
   const register = async (ev) => {
-    ev.preventDefault();
+    if (ev) ev.preventDefault();
+
     if (user.name && user.password && user.email) {
       setIsProcessing(true);
+      setIsCameraVisible(false);
       const userImg = imgData();
       await setUser({ ...user, imgData: userImg });
       setTimeout(() => {
@@ -130,7 +136,7 @@ export const Register = ({ signup, login }) => {
             type="email"
             className="field-input"
             onChange={handleChange}
-            value={user.email || ''}
+            value={user.email}
             name="email"
             id="email"
             placeholder="Email"
@@ -163,6 +169,9 @@ export const Register = ({ signup, login }) => {
           </button>
         </div>
       </form>
+      <button className="simple-button google-btn " onClick={googleSignup}>
+        <GoogleIcon /> Sign In with Google
+      </button>
     </div>
   );
 };

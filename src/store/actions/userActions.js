@@ -2,14 +2,24 @@ import { userService } from '../../services/userService';
 
 export function getLoggingUser() {
   return async () => {
-    return userService.getUserForDisplay();
+    return await userService.getUserForDisplay();
   };
 }
 
-export function signupUser(userData) {
+export function signupUser(userData, type) {
   return async (dispatch) => {
     try {
-      const user = await userService.signup(userData);
+      let user;
+      switch (type) {
+        case 'google':
+          user = await userService.signupGoogle();
+          break;
+        case 'email&password':
+          user = await userService.signup(userData);
+          break;
+        default:
+          user = null;
+      }
       dispatch({ type: 'SET_LOGGING_USER', user });
       return user;
     } catch (err) {
@@ -18,10 +28,20 @@ export function signupUser(userData) {
   };
 }
 
-export function loginUser(userData) {
+export function loginUser(userData, type) {
   return async (dispatch) => {
     try {
-      const user = await userService.login(userData);
+      let user;
+      switch (type) {
+        case 'google':
+          user = await userService.loginGoogle();
+          break;
+        case 'email&password':
+          user = await userService.login(userData);
+          break;
+        default:
+          user = null;
+      }
       dispatch({ type: 'SET_LOGGING_USER', user });
       return user;
     } catch (err) {

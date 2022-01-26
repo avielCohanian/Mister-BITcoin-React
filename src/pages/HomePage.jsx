@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
 import { bitcoinService } from '../services/bitcoinService';
-import { userService } from '../services/userService';
 import { getLoggingUser } from '../store/actions/userActions';
 
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -11,6 +10,8 @@ import anonymous from '../assets/imgs/anonymous.png';
 import { Link } from 'react-router-dom';
 
 export const HomePage = (props) => {
+  const { loggedInUser } = useSelector((state) => state.userModule);
+
   const [user, setUser] = useState(null);
   const [btc, setBtc] = useState(null);
 
@@ -19,8 +20,7 @@ export const HomePage = (props) => {
   useEffect(() => {
     (async () => {
       const user = await dispatch(getLoggingUser());
-      //  userService.getUser();
-      if (!user) props.history.push('/signup');
+      if (!loggedInUser) props.history.push('/signup');
       dispatch({ type: 'SET_LOGGING_USER', user });
       setUser(user);
     })();
@@ -52,7 +52,7 @@ export const HomePage = (props) => {
         <div>
           <b>Coins: </b>
           <span>
-            {user.coins} <b>$</b>{' '}
+            {user.coins} <b>$</b>
           </span>
         </div>
         <div>

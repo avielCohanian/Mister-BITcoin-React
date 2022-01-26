@@ -5,7 +5,7 @@ import { MovesList } from '../cmp/MovesList';
 import { TransferFund } from '../cmp/TransferFund';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
-import { getLoggingUser, addMove } from '../store/actions/userActions';
+import { getLoggingUser, addMove, updateUser } from '../store/actions/userActions';
 import { userService } from '../services/userService';
 
 import anonymous from '../assets/imgs/anonymous.png';
@@ -21,6 +21,7 @@ export const ContactDetailsPage = (props) => {
   const [currUser, setCurrUser] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
   const [isTransferMode, setIsTransferMode] = useState(false);
+  const [havePassword, setHavePassword] = useState(true);
   const [password, bindPassword, resatPassword] = useInput('');
 
   const amount = useRef(null);
@@ -64,7 +65,28 @@ export const ContactDetailsPage = (props) => {
 
   const checkPassword = async (ev) => {
     ev.preventDefault();
+    if (!havePassword) {
+      console.log(password);
+      await dispatch(updateUser({ ...loggingUser, password }));
+
+      resatPassword();
+      setHavePassword(true);
+      return;
+    }
+
     const isPassword = await userService.checkUserPassword(password);
+    if (isPassword === 'no-password') {
+      setHavePassword(false);
+      dispatch({
+        type: 'USERMSG',
+        msg: {
+          txt: `${loggingUser.name},You do not have a password yet, please select a password. `,
+          typeMsg: 'failure',
+        },
+      });
+      resatPassword();
+      return;
+    }
     resatPassword();
     if (!isPassword) {
       dispatch({
@@ -96,7 +118,7 @@ export const ContactDetailsPage = (props) => {
       >
         <form onClick={(ev) => ev.stopPropagation()} onSubmit={checkPassword}>
           <CloseIcon className="back-btn" onClick={closeTransferMode} />
-          <h1>Enter a password</h1>
+          <h1>{havePassword ? 'Enter a password' : 'Choose a password'}</h1>
           <div className="input-container">
             <PasswordIcon />
 

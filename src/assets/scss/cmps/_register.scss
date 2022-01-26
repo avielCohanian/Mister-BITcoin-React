@@ -114,6 +114,15 @@
   .footer {
     text-align: center;
   }
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    & > * {
+      margin: 0 10px;
+    }
+  }
 }
 
 .none {

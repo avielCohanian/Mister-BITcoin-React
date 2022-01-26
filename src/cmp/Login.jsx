@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
+import GoogleIcon from '@mui/icons-material/Google';
 
-export const Login = ({ register }) => {
+export const Login = ({ register, googleRegister }) => {
   const [user, setUser] = useState({
-    name: '',
+    email: '',
     password: '',
   });
 
@@ -16,40 +17,45 @@ export const Login = ({ register }) => {
   };
 
   return (
-    <form onSubmit={(ev) => register(ev, user)} className="form-login">
-      <div className="field">
-        <label className="field-icon">
-          <AccountCircleSharpIcon className="material-icons"></AccountCircleSharpIcon>
-        </label>
-        <input
-          type="text"
-          className="field-input"
-          onChange={handleChange}
-          value={user.name}
-          name="name"
-          id="name"
-          placeholder="Name"
-          required
-        />
-      </div>
+    <section className="login">
+      <form onSubmit={(ev) => register(ev, user)} className="form-login">
+        <div className="field">
+          <label className="field-icon">
+            <AlternateEmailSharpIcon className="material-icons" />
+          </label>
+          <input
+            type="email"
+            className="field-input"
+            onChange={handleChange}
+            value={user.email}
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+        </div>
 
-      <div className="field">
-        <label className="field-icon">
-          <PasswordSharpIcon className="material-icons"></PasswordSharpIcon>
-        </label>
-        <input
-          type="password"
-          className="field-input"
-          onChange={handleChange}
-          value={user.password}
-          name="password"
-          id="password"
-          placeholder="Password"
-          required
-          autoComplete="on"
-        />
-      </div>
-      <button className="simple-button">Login</button>
-    </form>
+        <div className="field">
+          <label className="field-icon">
+            <PasswordSharpIcon className="material-icons"></PasswordSharpIcon>
+          </label>
+          <input
+            type="password"
+            className="field-input"
+            onChange={handleChange}
+            value={user.password}
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+            autoComplete="on"
+          />
+        </div>
+        <button className="simple-button">Login</button>
+      </form>
+      <button className="simple-button google-btn " onClick={googleRegister}>
+        <GoogleIcon /> Login with Google
+      </button>
+    </section>
   );
 };

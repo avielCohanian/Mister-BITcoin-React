@@ -20,7 +20,6 @@ export const PhotoCapture = ({ onDone }) => {
   useEffect(() => {
     (async () => {
       await streamUserMediaVideo();
-      console.log(imageName);
     })();
   }, []);
 

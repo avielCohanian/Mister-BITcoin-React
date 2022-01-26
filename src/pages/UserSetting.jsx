@@ -10,6 +10,7 @@ import anonymous from '../assets/imgs/anonymous.png';
 
 import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { userService } from '../services/userService';
 
 export const UserSetting = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
@@ -21,7 +22,7 @@ export const UserSetting = (props) => {
 
   useEffect(() => {
     (async () => {
-      const loggingUser = await dispatch(getLoggingUser());
+      const loggingUser = await userService.getUser();
       setUser(loggingUser);
     })();
   }, [loggedInUser]);
@@ -101,14 +102,14 @@ export const UserSetting = (props) => {
               />
             </section>
             <section>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="tel">Phone</label>
               <input
-                placeholder="Email"
+                placeholder="Phone"
                 onChange={handleChange}
-                value={user.email}
-                type="email"
-                name="email"
-                id="email"
+                value={user.phone || ''}
+                type="tel"
+                name="tel"
+                id="tel"
               />
             </section>
             <a className="btn change-img" onClick={changeImg}>

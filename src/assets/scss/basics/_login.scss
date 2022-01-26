@@ -21,14 +21,25 @@
       margin-bottom: 25px;
     }
     input {
-      padding: 5px 8px;
-      width: 100%;
+      width: 250px;
+      padding: 10px;
+      border: #ffdead;
+      &:focus-visible {
+        border: none;
+        outline: none;
+      }
     }
     .login-user-btn {
       cursor: pointer;
       span {
         text-decoration: underline;
       }
+    }
+    .forgot-password {
+      font-size: 0.8em;
+      text-align: left;
+
+      margin: -30px 0 28px -111px;
     }
   }
   .google-btn {

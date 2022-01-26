@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, signupUser } from '../store/actions/userActions';
 import { Register } from './Register';
+import { userService } from '../services/userService';
 
 import { Login } from '../cmp/Login';
 
@@ -36,6 +37,12 @@ export const LoginSignupPage = (props) => {
     const currUser = await dispatch(loginUser(null, 'google'));
     userMsg(currUser);
   };
+  const restPass = async (email) => {
+    const reset = await userService.restPass(email);
+    reset
+      ? dispatch({ type: 'USERMSG', msg: { txt: `Reset email sent!`, typeMsg: 'success' } })
+      : dispatch({ type: 'USERMSG', msg: { txt: `reset email failed!`, typeMsg: 'failure' } });
+  };
 
   const userMsg = (user) => {
     user
@@ -52,7 +59,7 @@ export const LoginSignupPage = (props) => {
       {!isLogin ? (
         <Register googleSignup={googleSignup} signup={signup} />
       ) : (
-        <Login googleRegister={googleRegister} register={register} />
+        <Login googleRegister={googleRegister} register={register} restPass={restPass} />
       )}
     </div>
   );

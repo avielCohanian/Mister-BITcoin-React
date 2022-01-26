@@ -16,6 +16,7 @@ import {
   reauthenticateWithPopup,
   sendPasswordResetEmail,
 } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDI85p52_tMXOcna0mK2d2WpDy4b1au2k8',
@@ -56,6 +57,7 @@ const formattingUser = (user) => {
 const signInWithGoogle = async () => {
   try {
     const user = await signInWithPopup(auth, provider);
+    console.log(user);
     return formattingUser(user);
   } catch (err) {
     console.log(err);
@@ -76,17 +78,16 @@ const logOut = async () => {
     console.log(err);
   }
 };
-const restPassword = () => {
-  sendPasswordResetEmail(auth, 'avielac15@gmail.com')
+const restPassword = (email) => {
+  return sendPasswordResetEmail(auth, email)
     .then(() => {
-      console.log('reset email sent!');
-      // Password reset email sent!
-      // ..
+      return true;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // ..
+      console.log(errorMessage);
+      return false;
     });
 };
 

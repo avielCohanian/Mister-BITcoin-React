@@ -14,6 +14,7 @@ export const userService = {
   removeUser,
   loginGoogle,
   signupGoogle,
+  restPass,
 };
 const USER_KEY = 'yami';
 
@@ -25,6 +26,9 @@ async function getUserForDisplay() {
   let currUser = await getUser();
   delete currUser?.password;
   return currUser;
+}
+async function restPass(email) {
+  return await firebaseService.restPassword(email);
 }
 
 function _makeUser({ name, password, email, imgData, phone }) {

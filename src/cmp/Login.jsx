@@ -3,17 +3,28 @@ import React, { useEffect, useState } from 'react';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useDispatch } from 'react-redux';
 
-export const Login = ({ register, googleRegister }) => {
+export const Login = ({ register, googleRegister, restPass }) => {
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
     const field = target.name;
     const value = target.type === 'number' ? +target.value : target.value;
     setUser({ ...user, [field]: value });
+  };
+  const restPassword = () => {
+    if (user.email) restPass(user.email);
+    else {
+      dispatch({
+        type: 'USERMSG',
+        msg: { txt: `Please enter email and click again.`, typeMsg: '' },
+      });
+    }
   };
 
   return (
@@ -51,6 +62,9 @@ export const Login = ({ register, googleRegister }) => {
             autoComplete="on"
           />
         </div>
+        <p className="simple-button forgot-password " onClick={restPassword}>
+          Forgot Password?
+        </p>
         <button className="simple-button">Login</button>
       </form>
       <button className="simple-button google-btn " onClick={googleRegister}>

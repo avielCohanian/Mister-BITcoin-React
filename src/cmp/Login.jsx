@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import PasswordSharpIcon from '@mui/icons-material/PasswordSharp';
 import GoogleIcon from '@mui/icons-material/Google';
-import { useDispatch } from 'react-redux';
 
 export const Login = ({ register, googleRegister, restPass }) => {
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
+
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
@@ -17,6 +18,7 @@ export const Login = ({ register, googleRegister, restPass }) => {
     const value = target.type === 'number' ? +target.value : target.value;
     setUser({ ...user, [field]: value });
   };
+
   const restPassword = () => {
     if (user.email) restPass(user.email);
     else {
@@ -45,7 +47,6 @@ export const Login = ({ register, googleRegister, restPass }) => {
             required
           />
         </div>
-
         <div className="field">
           <label className="field-icon">
             <PasswordSharpIcon className="material-icons"></PasswordSharpIcon>

@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { useForm } from '../hooks/useForm';
 
 export const ContactFilter = ({ onChangeFilter }) => {
@@ -8,6 +7,7 @@ export const ContactFilter = ({ onChangeFilter }) => {
     },
     onChangeFilter
   );
+
   const { filterBy } = setFilterBy;
 
   return (

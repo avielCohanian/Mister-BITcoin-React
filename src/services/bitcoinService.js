@@ -10,6 +10,7 @@ export const bitcoinService = {
   getConfirmedTransactions,
 };
 
+// Bitcoin
 async function getRate(coins) {
   if (!storageService.load('btc') || storageService.load('dollar') !== coins) {
     const { data } = await axios.get(`https://blockchain.info/tobtc?currency=USD&value=${coins}`);
@@ -18,9 +19,10 @@ async function getRate(coins) {
   }
   return storageService.load('btc');
 }
+
+// Chart Data
 async function getMarketPrice() {
   let chartData = storageService.load(marketPriceKEY);
-
   if (!chartData.length) {
     const { data } = await axios.get(`https://api.blockchain.info/charts/market-price`, {
       params: {
@@ -35,7 +37,6 @@ async function getMarketPrice() {
   }
   return chartData;
 }
-
 async function getConfirmedTransactions() {
   let chartData = storageService.load(tradeVolumeKEY);
   if (!chartData.length) {
@@ -46,7 +47,6 @@ async function getConfirmedTransactions() {
         cors: true,
       },
     });
-
     chartData = data.values;
     storageService.store(tradeVolumeKEY, chartData);
     chartData = JSON.stringify(data.values);

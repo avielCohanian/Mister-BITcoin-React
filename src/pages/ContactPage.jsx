@@ -1,22 +1,26 @@
-import AddSharpIcon from '@material-ui/icons/AddSharp';
 import { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { ContactFilter } from '../cmp/ContactFilter';
 import { ContactList } from '../cmp/ContactList';
 import { DeleteModal } from '../cmp/DeleteModel';
 import Loading from '../cmp/Loading';
+
 import { loadContacts, removeContact, setFilterBy } from '../store/actions/contactActions';
 import { getLoggingUser } from '../store/actions/userActions';
 
+import AddSharpIcon from '@material-ui/icons/AddSharp';
+
 export const ContactPage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
-
   const { contacts } = useSelector((state) => state.contactModule);
+
   const [remove, setRemove] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(loadContacts());
   }, []);

@@ -119,8 +119,6 @@ async function addUser(user, type) {
 }
 async function updateUser(user) {
   const currUser = await getById(user._id);
-  console.log(currUser);
-  console.log(user);
   if (user.password !== currUser.password) {
     const password = user.password ? user.password : currUser.password;
     await _updateUserPassword(password, currUser);

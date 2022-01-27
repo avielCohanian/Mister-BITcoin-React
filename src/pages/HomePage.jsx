@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
+
 import { bitcoinService } from '../services/bitcoinService';
 import { getLoggingUser } from '../store/actions/userActions';
 
-import SettingsIcon from '@mui/icons-material/Settings';
 import anonymous from '../assets/imgs/anonymous.png';
-import { Link } from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export const HomePage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
@@ -40,7 +42,6 @@ export const HomePage = (props) => {
   };
 
   if (!user) return <Loading />;
-
   return (
     <div className="home-page">
       <Link className="simple-button setting-btn" to="/setting">

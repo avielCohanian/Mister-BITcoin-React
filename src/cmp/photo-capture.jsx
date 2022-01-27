@@ -8,14 +8,14 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
 
 export const PhotoCapture = ({ onDone }) => {
+  const [imageName, setImageName] = useState('');
+  const [showVideo, setShowVideo] = useState(true);
+  const [pickImage, setPickImage] = useState(false);
+
   const enableCamera = useRef(true);
   const picture = useRef(null);
   const videoPlayer = useRef(null);
   const canvasElement = useRef(null);
-  const [imageName, setImageName] = useState('');
-
-  const [showVideo, setShowVideo] = useState(true);
-  const [pickImage, setPickImage] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -41,13 +41,10 @@ export const PhotoCapture = ({ onDone }) => {
     setShowVideo(false);
     canvasElement.current.width = videoPlayer.current.videoWidth;
     canvasElement.current.height = videoPlayer.current.videoHeight;
-
     var context = canvasElement.current.getContext('2d');
-
     context.translate(canvasElement.current.width, 0);
     context.scale(-1, 1);
     context.drawImage(videoPlayer.current, 0, 0);
-
     stopVideoStream();
     picture.current = canvasElement.current.toDataURL();
     setShowVideo(false);

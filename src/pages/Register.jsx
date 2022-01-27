@@ -70,13 +70,8 @@ export const Register = ({ signup, googleSignup }) => {
       setTimeout(() => {
         if (confirmPassword !== user.password) {
           setConfirmPasswordErr('The passwords do not match');
-          // dispatch({
-          //   type: 'USERMSG',
-          //   msg: { txt: `The email is invalid`, typeMsg: 'failure' },
-          // });
           return;
         }
-        console.log('aa');
         signup(user);
       }, 1200);
     }

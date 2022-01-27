@@ -71,3 +71,9 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 1110px) {
+  .modal-content {
+    width: 80%;
+  }
+}

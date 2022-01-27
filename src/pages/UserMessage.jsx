@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Loading from '../cmp/Loading';
 import { MassageList } from '../cmp/MassageList';
+
 import { getLoggingUser, messageDecision } from '../store/actions/userActions';
 
 export const UserMessage = () => {
   const { loggedInUser } = useSelector((state) => state.userModule);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

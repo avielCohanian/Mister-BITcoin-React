@@ -1,4 +1,4 @@
-import firebaseService, { currUser, user } from './firebase.service';
+import firebaseService, { currUser } from './firebase.service';
 import { storageService } from './storageService';
 
 export const userService = {
@@ -16,60 +16,56 @@ export const userService = {
   signupGoogle,
   restPass,
 };
-const USER_KEY = 'yami';
+const USER_KEY = 'userKey';
 
+// user with password
 async function getUser() {
   const user = currUser;
   return user ? await firebaseService.getByEmailUser(user.email) : null;
 }
+
+// user without password
 async function getUserForDisplay() {
   let currUser = await getUser();
   delete currUser?.password;
   return currUser;
 }
+
 async function restPass(email) {
   return await firebaseService.restPassword(email);
 }
 
-function _makeUser({ name, password, email, imgData, phone }) {
-  return {
-    name,
-    password,
-    email,
-    img: imgData,
-    coins: 100,
-    moves: [],
-    messages: [],
-    phone,
-  };
-}
-
+// Add firebase auth
 async function signup(user, type) {
   const userToSave = _makeUser(user);
   const addUser = await firebaseService.saveUser(userToSave, type);
   storageService.store(USER_KEY, addUser);
   return addUser;
-  return addUser ? await login(userToSave) : null;
 }
 
+// signUp with Google
 async function signupGoogle() {
   let user = await firebaseService.signInWithGoogle();
   user = await signup(user, 'google');
   return user;
 }
 
+// Login with Google
 async function loginGoogle() {
   let user = await firebaseService.loginWithGoogle();
   user = await firebaseService.getByEmailUser(user.email);
   storageService.store(USER_KEY, user);
   return user;
 }
+
+// Login with Email & Password
 async function login({ email, password }) {
   let user = await firebaseService.loginUser(email, password);
   user = await firebaseService.getByEmailUser(user.email);
   storageService.store(USER_KEY, user);
   return user;
 }
+
 function logOut() {
   firebaseService.logOut();
   storageService.remove(USER_KEY);
@@ -97,6 +93,8 @@ async function checkUserPassword(password) {
   let isPassword = await firebaseService.checkUserPassword(currUser._id, password);
   return isPassword;
 }
+
+// Transference
 async function messageDecision(ans, message) {
   let currUser = await getUser();
   if (ans) {
@@ -116,12 +114,14 @@ async function messageDecision(ans, message) {
   return currUser;
 }
 
+// Cancel transference
 async function moneyReturn(transferDetails) {
   const user = await firebaseService.getById(transferDetails.sensUserId);
   user.coins += transferDetails.amount;
   await firebaseService.saveUser(user);
 }
 
+//  add Transference
 async function addMove(contact, amount) {
   const user = await getUser();
   if (user.coins - amount < 0 || amount <= 0) return;
@@ -155,6 +155,18 @@ async function sendCoins({ at, amount }, contact) {
   await firebaseService.saveUser(contactTo);
 }
 
+function _makeUser({ name, password, email, imgData, phone }) {
+  return {
+    name,
+    password,
+    email,
+    img: imgData,
+    coins: 100,
+    moves: [],
+    messages: [],
+    phone,
+  };
+}
 function _makeId(length = 10) {
   var txt = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import anonymous from '../assets/imgs/anonymous.png';
 import CloseIcon from '@material-ui/icons/Close';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
-import anonymous from '../assets/imgs/anonymous.png';
 
 export function ContactPreview({ contact, removeContact }) {
   const imgData = () => {
@@ -18,7 +19,6 @@ export function ContactPreview({ contact, removeContact }) {
       <a className="delete-btn" onClick={() => removeContact(contact._id)}>
         <CloseIcon />
       </a>
-
       <Link to={`/contact/edit/${contact._id}`} className="edit-btn">
         <EditSharpIcon />
       </Link>

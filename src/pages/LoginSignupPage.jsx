@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, signupUser } from '../store/actions/userActions';
-import { Register } from './Register';
-import { userService } from '../services/userService';
+import { useDispatch } from 'react-redux';
 
+import { Register } from './Register';
 import { Login } from '../cmp/Login';
 
-export const LoginSignupPage = (props) => {
-  const dispatch = useDispatch();
+import { loginUser, signupUser } from '../store/actions/userActions';
+import { userService } from '../services/userService';
 
+export const LoginSignupPage = (props) => {
   const [isLogin, setIsLogin] = useState(true);
+
+  const dispatch = useDispatch();
 
   const signup = async (user) => {
     const addUser = await dispatch(signupUser(user, 'email&password'));
@@ -21,10 +22,6 @@ export const LoginSignupPage = (props) => {
     userMsg(addUser);
   };
 
-  const login = () => {
-    setIsLogin(!isLogin);
-  };
-
   const register = async (ev, user) => {
     ev.preventDefault();
     if (user.email && user.password) {
@@ -32,10 +29,16 @@ export const LoginSignupPage = (props) => {
       userMsg(currUser);
     }
   };
+
+  const login = () => {
+    setIsLogin(!isLogin);
+  };
+
   const googleRegister = async () => {
     const currUser = await dispatch(loginUser(null, 'google'));
     userMsg(currUser);
   };
+
   const restPass = async (email) => {
     const reset = await userService.restPass(email);
     reset
@@ -54,7 +57,6 @@ export const LoginSignupPage = (props) => {
       <h4 className="login-user-btn">
         <a onClick={login}>{!isLogin ? <h4> Login </h4> : <h4> SignUp</h4>}</a>
       </h4>
-
       {!isLogin ? (
         <Register googleSignup={googleSignup} signup={signup} />
       ) : (

@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavLink, withRouter, Link } from 'react-router-dom';
-
-import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { logOut } from '../store/actions/userActions';
 
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
@@ -53,5 +53,3 @@ export const AppHeader = () => {
     </header>
   );
 };
-
-// export const AppHeader = withRouter(_AppHeader);

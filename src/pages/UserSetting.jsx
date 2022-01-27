@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from '../hooks/useForm';
-import { getLoggingUser, removeUser, updateUser } from '../store/actions/userActions';
+import { Link } from 'react-router-dom';
+
 import { DeleteModal } from '../cmp/DeleteModel';
 import { PhotoCapture } from '../cmp/photo-capture';
-import { Link } from 'react-router-dom';
 import Loading from '../cmp/Loading';
-import anonymous from '../assets/imgs/anonymous.png';
 
+import { removeUser, updateUser } from '../store/actions/userActions';
+import { userService } from '../services/userService';
+import { useForm } from '../hooks/useForm';
+
+import anonymous from '../assets/imgs/anonymous.png';
 import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { userService } from '../services/userService';
 
 export const UserSetting = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
-  const [user, handleChange, setUser] = useForm(null);
+
   const [isChangeImg, setIsChangeImg] = useState(false);
   const [remove, setRemove] = useState(false);
+
+  const [user, handleChange, setUser] = useForm(null);
 
   const dispatch = useDispatch();
 
@@ -39,10 +43,12 @@ export const UserSetting = (props) => {
   const changeImg = () => {
     setIsChangeImg(!isChangeImg);
   };
+
   const onDone = (img) => {
     changeImg();
     setUser({ ...user, img });
   };
+
   const deleteUser = async () => {
     setRemove(true);
   };
@@ -79,7 +85,6 @@ export const UserSetting = (props) => {
           </button>
         </section>
       )}
-
       {!isChangeImg && (
         <>
           <form onSubmit={update} className="simple-form">

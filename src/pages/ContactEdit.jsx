@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { contactService } from '../services/contactService';
-import Loading from '../cmp/Loading';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../cmp/Loading';
+
 import { getContactById } from '../store/actions/contactActions';
+import { contactService } from '../services/contactService';
 
 import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
 
@@ -11,6 +12,7 @@ export const ContactEdit = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
 
   const [contact, setContact] = useState(null);
+
   const dispatch = useDispatch();
 
   useEffect(async () => {
@@ -73,7 +75,6 @@ export const ContactEdit = (props) => {
             id="email"
           />
         </section>
-
         <a className="simple-button save-btn" onClick={onSaveContact}>
           Save
         </a>

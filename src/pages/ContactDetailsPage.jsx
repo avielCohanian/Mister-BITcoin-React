@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+
 import Loading from '../cmp/Loading';
 import { MovesList } from '../cmp/MovesList';
 import { TransferFund } from '../cmp/TransferFund';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactById } from '../store/actions/contactActions';
 import { getLoggingUser, addMove, updateUser } from '../store/actions/userActions';
+
 import { userService } from '../services/userService';
+import { useInput } from '../hooks/useInput';
 
 import anonymous from '../assets/imgs/anonymous.png';
 import ArrowBackIosSharpIcon from '@material-ui/icons/ArrowBackIosSharp';
@@ -14,30 +17,20 @@ import EditSharpIcon from '@material-ui/icons/EditSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import PasswordIcon from '@mui/icons-material/Password';
 import SendIcon from '@mui/icons-material/Send';
-import { useInput } from '../hooks/useInput';
 
 export const ContactDetailsPage = (props) => {
   const { loggedInUser } = useSelector((state) => state.userModule);
+
   const [currUser, setCurrUser] = useState(null);
   const [loggingUser, setLoggingUser] = useState(null);
-  const [isTransferMode, setIsTransferMode] = useState(false);
   const [havePassword, setHavePassword] = useState(true);
+  const [isTransferMode, setIsTransferMode] = useState(false);
   const [password, bindPassword, resatPassword] = useInput('');
 
   const amount = useRef(null);
   const inputRef = useRef(null);
 
   const dispatch = useDispatch();
-
-  const imgData = () => {
-    return currUser.img || anonymous;
-  };
-
-  useEffect(() => {
-    if (isTransferMode) {
-      inputRef.current.focus();
-    }
-  }, [isTransferMode]);
 
   useEffect(() => {
     (async () => {
@@ -47,12 +40,22 @@ export const ContactDetailsPage = (props) => {
   }, []);
 
   useEffect(() => {
+    if (isTransferMode) {
+      inputRef.current.focus();
+    }
+  }, [isTransferMode]);
+
+  useEffect(() => {
     (async () => {
       const loggingUser = await dispatch(getLoggingUser());
       if (!loggingUser) props.history.push('/signup');
       setLoggingUser(loggingUser);
     })();
   }, [loggedInUser]);
+
+  const imgData = () => {
+    return currUser.img || anonymous;
+  };
 
   const transfer = async (amountToTransfer) => {
     setIsTransferMode(true);
@@ -67,12 +70,10 @@ export const ContactDetailsPage = (props) => {
     ev.preventDefault();
     if (!havePassword) {
       await dispatch(updateUser({ ...loggingUser, password }));
-
       resatPassword();
       setHavePassword(true);
       return;
     }
-
     const isPassword = await userService.checkUserPassword(password);
     if (isPassword === 'no-password') {
       setHavePassword(false);
@@ -120,7 +121,6 @@ export const ContactDetailsPage = (props) => {
           <h1>{havePassword ? 'Enter a password' : 'Choose a password'}</h1>
           <div className="input-container">
             <PasswordIcon />
-
             <input
               type="password"
               placeholder="Enter the Password"
@@ -134,7 +134,6 @@ export const ContactDetailsPage = (props) => {
           <SendIcon className="send" onClick={checkPassword} />
         </form>
       </section>
-
       <div className="btn-edit-container">
         <Link className="simple-button back-btn" to="/contact">
           <ArrowBackIosSharpIcon />

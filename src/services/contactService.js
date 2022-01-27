@@ -22,7 +22,7 @@ function sort(arr) {
 }
 
 async function getContacts(filterBy = null) {
-  let contactsToReturn = await firebaseService.getUsers();
+  let contactsToReturn = await firebaseService.getContacts();
   if (filterBy) {
     contactsToReturn = await filter(contactsToReturn, filterBy);
   }
@@ -40,7 +40,7 @@ function remove(contactId) {
 }
 
 function getContactById(contactId) {
-  return firebaseService.getByIdUser(contactId);
+  return firebaseService.getById(contactId);
 }
 
 function saveContact(contact) {

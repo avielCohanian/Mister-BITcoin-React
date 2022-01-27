@@ -11,28 +11,22 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  signInWithCustomToken,
   updateProfile,
-  reauthenticateWithPopup,
   sendPasswordResetEmail,
 } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { firebaseConfigData } from './firebaseConfig';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDI85p52_tMXOcna0mK2d2WpDy4b1au2k8',
-  authDomain: 'mister-bitcoin-15.firebaseapp.com',
-  projectId: 'mister-bitcoin-15',
-  storageBucket: 'mister-bitcoin-15.appspot.com',
-  messagingSenderId: '21448580453',
-  appId: '1:21448580453:web:3a3ca699cce655089b158c',
-  measurementId: 'G-0BBPRRGHQT',
-};
-
+// global
+const firebaseConfig = firebaseConfigData;
 const app = initializeApp(firebaseConfig);
+
+// contacts
+const db = getFirestore();
+const dataRefUser = collection(db, 'users');
+
+// user
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-auth.languageCode = 'he';
-
 export const user = auth.currentUser;
 export let currUser = null;
 
@@ -44,15 +38,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-const db = getFirestore();
-const dataRefUser = collection(db, 'users');
-
-const formattingUser = (user) => {
-  const { email, phoneNumber, photoURL, displayName, uid } = user.user || user;
-  const userDetails = { email, phone: phoneNumber, imgData: photoURL, name: displayName, password: null };
-  return userDetails;
-};
-
+// Google Auth
 const signInWithGoogle = async () => {
   try {
     const user = await signInWithPopup(auth, provider);
@@ -69,13 +55,28 @@ const loginWithGoogle = async () => {
     console.log(err);
   }
 };
-const logOut = async () => {
-  try {
-    const user = await signOut(auth);
-  } catch (err) {
-    console.log(err);
-  }
+
+// async function login(email, password) {
+//   let users = await getContacts();
+//   const currUser = users.find((u) => {
+//     return u.email === email && u.password === password;
+//   });
+//   // delete currUser.password;
+//   return currUser;
+// }
+async function loginUser(email, password) {
+  const currUser = await signInWithEmailAndPassword(auth, email, password);
+  return formattingUser(currUser);
+}
+
+// Formatting Google obj
+const formattingUser = (user) => {
+  const { email, phoneNumber, photoURL, displayName, uid } = user.user || user;
+  const userDetails = { email, phone: phoneNumber, imgData: photoURL, name: displayName, password: null };
+  return userDetails;
 };
+
+// With email
 const restPassword = (email) => {
   return sendPasswordResetEmail(auth, email)
     .then(() => {
@@ -89,15 +90,7 @@ const restPassword = (email) => {
     });
 };
 
-async function getUsers() {
-  let querySnapshot = await getDocs(dataRefUser);
-  return querySnapshot.docs.map((doc) => {
-    let user = doc.data();
-    user._id = doc.id;
-    return user;
-  });
-}
-
+// Add/Update
 async function saveUser(user, type) {
   let newUser = user;
   if (user._id) {
@@ -107,10 +100,9 @@ async function saveUser(user, type) {
   }
   return newUser;
 }
-
 async function addUser(user, type) {
   try {
-    let users = await getUsers();
+    let users = await getContacts();
     if (users.some((u) => u.email === user.email)) return null;
     const _id = _makeId();
     await addDoc(dataRefUser, {
@@ -125,17 +117,17 @@ async function addUser(user, type) {
     console.log(err);
   }
 }
-
 async function updateUser(user) {
-  const currUser = await getByIdUser(user._id);
+  const currUser = await getById(user._id);
+  console.log(currUser);
+  console.log(user);
   if (user.password !== currUser.password) {
     const password = user.password ? user.password : currUser.password;
-    await updateUserPassword(password);
+    await _updateUserPassword(password, currUser);
   }
   await setProfileUser(user);
   setDocUser(user);
 }
-
 async function setDocUser(user) {
   try {
     const frankDocRef = doc(db, 'users', user._id);
@@ -154,7 +146,6 @@ async function setDocUser(user) {
     console.log(err);
   }
 }
-
 async function setProfileUser(user) {
   await updateProfile(auth.currentUser, {
     displayName: user.name,
@@ -162,44 +153,47 @@ async function setProfileUser(user) {
     phoneNumber: user.phone,
   });
 }
-
-async function updateUserPassword(newPassword) {
+async function _updateUserPassword(newPassword, lastUser) {
   try {
-    const credential = await EmailAuthProvider.credential(currUser.email, currUser.newPassword);
-    reauthenticateWithCredential(user, credential);
+    const credential = await EmailAuthProvider.credential(lastUser.email, lastUser.password);
+    await reauthenticateWithCredential(user, credential);
     await updatePassword(user, newPassword);
   } catch (err) {
     console.log(err);
   }
 }
 
+const logOut = async () => {
+  try {
+    const user = await signOut(auth);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Contacts
+async function getContacts() {
+  let querySnapshot = await getDocs(dataRefUser);
+  return querySnapshot.docs.map((doc) => {
+    let user = doc.data();
+    user._id = doc.id;
+    return user;
+  });
+}
+
 async function removeUser(userId) {
   return await deleteDoc(doc(db, 'users', userId));
 }
-
-async function getByIdUser(userId) {
-  let users = await getUsers();
+async function getById(userId) {
+  let users = await getContacts();
   return users.find((t) => t._id === userId);
 }
 async function getByEmailUser(email) {
-  let users = await getUsers();
+  let users = await getContacts();
   return users.find((t) => t.email === email);
 }
-async function login(email, password) {
-  let users = await getUsers();
-  const currUser = users.find((u) => {
-    return u.email === email && u.password === password;
-  });
-  // delete currUser.password;
-  return currUser;
-}
-async function loginUser(email, password) {
-  const currUser = await signInWithEmailAndPassword(auth, email, password);
-  return formattingUser(currUser);
-}
-
 async function checkUserPassword(userId, password) {
-  const currUser = await getByIdUser(userId);
+  const currUser = await getById(userId);
   return currUser.password === password;
 }
 
@@ -213,17 +207,15 @@ function _makeId(length = 10) {
 }
 
 export default {
-  getUsers,
+  getContacts,
   saveUser,
   removeUser,
-  getByIdUser,
+  getById,
   getByEmailUser,
-  login,
   checkUserPassword,
   signInWithGoogle,
   logOut,
   loginUser,
   loginWithGoogle,
-  updateUserPassword,
   restPassword,
 };

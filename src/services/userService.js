@@ -117,7 +117,7 @@ async function messageDecision(ans, message) {
 }
 
 async function moneyReturn(transferDetails) {
-  const user = await firebaseService.getByIdUser(transferDetails.sensUserId);
+  const user = await firebaseService.getById(transferDetails.sensUserId);
   user.coins += transferDetails.amount;
   await firebaseService.saveUser(user);
 }
@@ -140,7 +140,7 @@ async function addMove(contact, amount) {
 }
 
 async function sendCoins({ at, amount }, contact) {
-  const contactTo = await firebaseService.getByIdUser(contact._id);
+  const contactTo = await firebaseService.getById(contact._id);
   const currUser = await getUser();
   const move = {
     sensUserId: currUser._id,

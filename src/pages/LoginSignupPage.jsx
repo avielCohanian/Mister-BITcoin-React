@@ -18,7 +18,6 @@ export const LoginSignupPage = (props) => {
 
   const googleSignup = async () => {
     const addUser = await dispatch(signupUser(null, 'google'));
-    console.log(addUser);
     userMsg(addUser);
   };
 

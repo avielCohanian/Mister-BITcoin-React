@@ -66,7 +66,6 @@ export const ContactDetailsPage = (props) => {
   const checkPassword = async (ev) => {
     ev.preventDefault();
     if (!havePassword) {
-      console.log(password);
       await dispatch(updateUser({ ...loggingUser, password }));
 
       resatPassword();

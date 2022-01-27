@@ -39,7 +39,6 @@ export let currUser = null;
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currUser = formattingUser(user);
-    console.log('in');
   } else {
     console.log('logout');
   }
@@ -57,7 +56,6 @@ const formattingUser = (user) => {
 const signInWithGoogle = async () => {
   try {
     const user = await signInWithPopup(auth, provider);
-    console.log(user);
     return formattingUser(user);
   } catch (err) {
     console.log(err);
@@ -120,7 +118,6 @@ async function addUser(user, type) {
       _id,
     });
     if (!type) {
-      console.log();
       await createUserWithEmailAndPassword(auth, user.email, user.password);
     }
     return { ...user, _id };
@@ -193,7 +190,6 @@ async function login(email, password) {
   const currUser = users.find((u) => {
     return u.email === email && u.password === password;
   });
-  console.log(currUser);
   // delete currUser.password;
   return currUser;
 }

@@ -27,7 +27,7 @@
     // background-color: #e6e6e6;
     background-image: url('../../imgs/bcImg.jpg');
 
-    transform: translateY(500px);
+    transform: translateY(580px);
     transition: transform 0.3s;
 
     &.show {
@@ -85,8 +85,18 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 25px;
+    .field-input {
+      width: 250px;
+      padding: 10px;
+      border: #ffdead;
+      &:focus-visible {
+        border: none;
+        outline: none;
+      }
+    }
   }
   .form-register {
+    margin-top: 0;
     .btn-identify {
       width: 50%;
     }
@@ -95,24 +105,35 @@
     position: relative;
     padding: 2px;
   }
-  input.ng-touched.ng-invalid {
-    border-left: 5px solid red;
-  }
+  // input.ng-touched.ng-invalid {
+  //   border-left: 5px solid red;
+  // }
 
-  input.ng-valid[required] {
-    border-left: 5px solid green;
-  }
+  // input.ng-valid[required] {
+  //   border-left: 5px solid green;
+  // }
 
-  input:invalid {
-    // border-left: 5px solid red;
-  }
+  // input:out-of-range {
+  //   border-left: 5px solid red;
+  // }
 
   input:valid {
     border-left: 5px solid green;
   }
-
+  .err-msg {
+    margin-top: -35px;
+    margin-left: 39px;
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    color: red;
+  }
+  .phone {
+    margin-bottom: 5px;
+  }
   .footer {
     text-align: center;
+    // z-index: 1;
   }
   .google-btn {
     display: flex;

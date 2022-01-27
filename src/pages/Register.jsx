@@ -11,10 +11,13 @@ import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import GoogleIcon from '@mui/icons-material/Google';
 import firebaseService from '../services/firebase.service';
+import { useInput } from '../hooks/useInput';
 
 export const Register = ({ signup, googleSignup }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
+  const [confirmPasswordErr, setConfirmPasswordErr] = useState('');
+  const [confirmPassword, bindConfirmPassword, resatConfirmPassword] = useInput('');
 
   const [user, setUser] = useState({
     name: '',
@@ -65,17 +68,15 @@ export const Register = ({ signup, googleSignup }) => {
       const userImg = imgData();
       await setUser({ ...user, imgData: userImg });
       setTimeout(() => {
-        if (
-          !/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test(
-            user.email
-          )
-        ) {
-          dispatch({
-            type: 'USERMSG',
-            msg: { txt: `The email is invalid`, typeMsg: 'failure' },
-          });
+        if (confirmPassword !== user.password) {
+          setConfirmPasswordErr('The passwords do not match');
+          // dispatch({
+          //   type: 'USERMSG',
+          //   msg: { txt: `The email is invalid`, typeMsg: 'failure' },
+          // });
           return;
         }
+        console.log('aa');
         signup(user);
       }, 1200);
     }
@@ -111,7 +112,7 @@ export const Register = ({ signup, googleSignup }) => {
           />
         </div>
 
-        <div className="field">
+        <div className="field" title="The password must contain at least 6 characters letters and numbers">
           <label className="field-icon">
             <PasswordSharpIcon className="material-icons" />
           </label>
@@ -123,10 +124,28 @@ export const Register = ({ signup, googleSignup }) => {
             name="password"
             id="password"
             placeholder="Password"
-            required
             autoComplete="on"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            required
           />
         </div>
+        <div className="field" title="Confirm Password">
+          <label className="field-icon">
+            <PasswordSharpIcon className="material-icons" />
+          </label>
+          <input
+            type="password"
+            className="field-input"
+            {...bindConfirmPassword}
+            name="ConfirmPassword"
+            id="ConfirmPassword"
+            placeholder="Confirm Password"
+            autoComplete="on"
+            disabled={!user.password}
+            required
+          />
+        </div>
+        {confirmPasswordErr && <p className="err-msg">{confirmPasswordErr}</p>}
 
         <div className="field">
           <label className="field-icon">
@@ -141,10 +160,11 @@ export const Register = ({ signup, googleSignup }) => {
             id="email"
             placeholder="Email"
             autoComplete="on"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             required
           />
         </div>
-        <div className="field">
+        <div className="field phone">
           <label className="field-icon">
             <LocalPhoneIcon className="material-icons" />
           </label>

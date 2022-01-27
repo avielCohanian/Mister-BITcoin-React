@@ -1,6 +1,4 @@
 import firebaseService from './firebase.service';
-import { userService } from './userService';
-import contacts from '../contact.json';
 
 export const contactService = {
   getContacts,
@@ -61,9 +59,9 @@ async function filter(contacts, { filterBy }) {
   return contacts.filter((contact) => {
     if (filterBy) {
       return (
-        contact.name.toLocaleLowerCase().includes(filterBy.toLocaleLowerCase()) ||
+        (contact.name && contact.name.toLocaleLowerCase().includes(filterBy.toLocaleLowerCase())) ||
         (contact.phone && contact.phone.toLocaleLowerCase().includes(filterBy)) ||
-        contact.email.toLocaleLowerCase().includes(filterBy)
+        (contact.email && contact.email.toLocaleLowerCase().includes(filterBy))
       );
     } else return contact;
   });

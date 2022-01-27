@@ -95,7 +95,6 @@ async function checkUserPassword(password) {
     return 'no-password';
   }
   let isPassword = await firebaseService.checkUserPassword(currUser._id, password);
-  console.log(isPassword);
   return isPassword;
 }
 async function messageDecision(ans, message) {

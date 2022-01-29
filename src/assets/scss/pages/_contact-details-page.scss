@@ -9,7 +9,7 @@
       max-height: 400px;
       max-width: 400px;
       position: fixed;
-      background-color: rgb(250, 252, 250);
+      background-color: #bdb9b8;
       border: #64504973;
       border-radius: 5px;
       box-shadow: -3px 1px 28px #00000061;
@@ -25,12 +25,18 @@
         align-items: center;
         align-content: center;
         margin-bottom: 35px;
+
         input {
           width: 250px;
           height: 35px;
           border-radius: 7px;
           color: #252121;
           margin: 0 8px;
+
+          padding: 10px;
+          border: #ffdead;
+          background-color: #ffffff;
+          border-bottom: 2px #000 solid;
         }
       }
       .send {
@@ -90,7 +96,7 @@
     button {
       width: 60px;
       border-radius: 3em;
-      background-color: #8681783b;
+      background-color: #86817800;
       &:hover {
         background-color: #a298986b;
       }

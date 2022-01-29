@@ -15,6 +15,7 @@ body {
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: Ubuntu-Regular;
 }
 
 img {
@@ -33,9 +34,15 @@ p {
   padding: 0;
 }
 
+h1,
+h1 {
+  font-family: Ubuntu-Bold;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+  font-family: Ubuntu-Light;
   &:hover {
     // text-decoration: underline;
   }

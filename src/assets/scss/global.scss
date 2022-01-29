@@ -14,7 +14,6 @@
 @import 'basics/animations';
 @import 'basics/loading';
 @import 'basics/delete-modal';
-@import 'basics/login';
 
 // Pages
 @import 'pages/app';
@@ -37,6 +36,7 @@
 @import 'cmps/user-msg';
 @import 'cmps/massage-list';
 @import 'cmps/massage-preview';
+@import 'cmps/login';
 
 .active {
   color: #19a000d9;

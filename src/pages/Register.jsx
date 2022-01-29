@@ -26,7 +26,6 @@ export const Register = ({ signup, googleSignup }) => {
     phone: '',
     imgData: null,
   });
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setUser({
@@ -120,10 +119,12 @@ export const Register = ({ signup, googleSignup }) => {
             id="password"
             placeholder="Password"
             autoComplete="on"
-            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
             required
           />
         </div>
+        <p className=" explanation">The password must contain at least 6 letters and numbers </p>
+
         <div className="field" title="Confirm Password">
           <label className="field-icon">
             <PasswordSharpIcon className="material-icons" />

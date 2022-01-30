@@ -107,17 +107,6 @@
     position: relative;
     padding: 2px;
   }
-  // input.ng-touched.ng-invalid {
-  //   border-left: 5px solid red;
-  // }
-
-  // input.ng-valid[required] {
-  //   border-left: 5px solid green;
-  // }
-
-  // input:out-of-range {
-  //   border-left: 5px solid red;
-  // }
 
   input:valid {
     border-left: 5px solid green;
@@ -126,6 +115,7 @@
     margin-top: -35px;
     margin-left: 39px;
     font-size: 12px;
+    color: #000000a6;
   }
   .err-msg {
     margin-top: -35px;

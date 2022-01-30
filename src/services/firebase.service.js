@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, deleteDoc, doc, setDoc, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc, setDoc, addDoc, onSnapshot } from 'firebase/firestore';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -56,14 +56,6 @@ const loginWithGoogle = async () => {
   }
 };
 
-// async function login(email, password) {
-//   let users = await getContacts();
-//   const currUser = users.find((u) => {
-//     return u.email === email && u.password === password;
-//   });
-//   // delete currUser.password;
-//   return currUser;
-// }
 async function loginUser(email, password) {
   const currUser = await signInWithEmailAndPassword(auth, email, password);
   return formattingUser(currUser);
@@ -105,13 +97,13 @@ async function addUser(user, type) {
     let users = await getContacts();
     if (users.some((u) => u.email === user.email)) return null;
     const _id = _makeId();
+    if (!type) {
+      await createUserWithEmailAndPassword(auth, user.email, user.password);
+    }
     await addDoc(dataRefUser, {
       ...user,
       _id,
     });
-    if (!type) {
-      await createUserWithEmailAndPassword(auth, user.email, user.password);
-    }
     return { ...user, _id };
   } catch (err) {
     console.log(err);
@@ -139,6 +131,7 @@ async function setDocUser(user) {
       messages: user.messages,
       phone: user.phone,
       password: user.password ? user.password : currUser.password,
+      isAdmin: user.isAdmin ? user.isAdmin : false,
     });
   } catch (err) {
     console.log(err);

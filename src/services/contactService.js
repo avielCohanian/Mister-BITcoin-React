@@ -11,12 +11,14 @@ export const contactService = {
 // Contacts for display
 async function getContacts(filterBy = null) {
   let contactsToReturn = await firebaseService.getContacts();
+  contactsToReturn = contactsToReturn.filter((c) => c.name !== 'admin');
   if (filterBy) {
     contactsToReturn = await _filter(contactsToReturn, filterBy);
   }
-  // const contactsToReturn = contacts;
-  // contactsToReturn.forEach((c) => {
-  //   userService.signup(c);
+
+  // contactsToReturn.forEach(async (c) => {
+  //   const { data } = await axios('https://randomuser.me/api/');
+  //   userService.updateUser(c);
   // });
   return _sort(contactsToReturn);
 }

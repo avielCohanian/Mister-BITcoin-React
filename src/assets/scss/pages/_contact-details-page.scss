@@ -35,8 +35,11 @@
 
           padding: 10px;
           border: #ffdead;
-          background-color: #ffffff;
+          background-color: #ffffff7a;
           border-bottom: 2px #000 solid;
+          &:focus-visible {
+            outline: none;
+          }
         }
       }
       .send {
